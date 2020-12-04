@@ -10,6 +10,7 @@ class IAgent(ICostCalculator):
 
     def __init__(self):
         self._was_terminated = False
+        self._distance_left_to_travel = 0
 
     @abstractmethod
     def get_action(self, percepts: Tuple[State, EnvironmentConfiguration]) -> str:
@@ -21,5 +22,11 @@ class IAgent(ICostCalculator):
         """
         pass
 
-    def was_terminated(self):
+    def was_terminated(self) -> bool:
         return self._was_terminated
+
+    def is_travelling(self) -> bool:
+        if self._distance_left_to_travel == 0:
+            return False
+        else:
+            return True

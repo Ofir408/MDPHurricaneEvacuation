@@ -7,9 +7,11 @@ from utils.EnvironmentUtils import EnvironmentUtils
 class RTAStarAgent(ITreeSearchAgent):
 
     def __init__(self, limit=10):
+        self.limit = limit
         super().__init__(AStarSearchTree(LeftVertexesToVisitFunc(), limit))
 
     def _get_path(self, percepts):
+        super().__init__(AStarSearchTree(LeftVertexesToVisitFunc(), self.limit))
         vertexes_path = super()._get_path(percepts)
         last_vertex = vertexes_path[-1]
         initial_state, env_config = percepts

@@ -13,19 +13,28 @@ from utils.EnvironmentUtils import EnvironmentUtils
 
 class ITreeSearchAgent(IAgent, ABC):
 
+    TRAVELLING = "TRAVELLING"
+
     def __init__(self, search_tree_algo: IGeneralSearchTree):
         super().__init__()
         self._search_tree_algo = search_tree_algo
         self._path_queue = deque()
 
     def get_action(self, percepts: Tuple[State, EnvironmentConfiguration]) -> str:
+        if self.is_travelling():
+            self._distance_left_to_travel -= 1  # Travel this step
+            return ITreeSearchAgent.TRAVELLING
+
         if len(self._path_queue) == 0:
             was_path_found = self.__init_path(percepts)
             if not was_path_found:
                 print("path not found")
                 self._was_terminated = True
                 return IGeneralSearchTree.SOLUTION_NOT_FOUND
-        return self._path_queue.popleft()
+        edge_name = self._path_queue.popleft()
+        env_config = percepts[1]
+        self._distance_left_to_travel = env_config.get_edges()[edge_name].get_weight()
+        return edge_name
 
     def __init_path(self, percepts: Tuple[State, EnvironmentConfiguration]):
         self._path_queue.clear()

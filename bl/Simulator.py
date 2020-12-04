@@ -70,10 +70,16 @@ class Simulator:
 
     def __display_word_state(self, current_agent_num, agents_num, actions, costs, scores, env_config):
         if current_agent_num == agents_num - 1:
+            # calc actions without TRAVELLING steps
+            temp = []
+            for current_agent_action in actions:
+                temp.append([action for action in current_agent_action if action != 'TRAVELLING'])
+
             print("----------------------------------")
             print("The step is over. Display the state of the world:")
             EnvironmentUtils.print_environment(env_config)
             print("actions: ", actions)
+            print("concise actions: ", temp)
             print("costs: ", costs)
             print("scores: ", scores)
             print("----------------------------------")

@@ -24,9 +24,7 @@ class IGeneralSearchTree(ICostCalculator, ABC):
         initial_node = self.__make_node(initial_state, backup_env_conf)
         self.__insert_to_fringe(fringe, initial_node, initial_node.get_cost())
         last_node = copy.deepcopy(initial_node)
-        self._was_terminate = False
         backup_expansions_num = self._expansions_num
-        self._expansions_num = 0
         while len(fringe) > 0 and not self._was_terminate:
             node, _ = self.__pop_from_fringe(fringe)
             last_node = node
