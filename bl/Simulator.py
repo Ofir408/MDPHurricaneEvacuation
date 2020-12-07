@@ -32,7 +32,7 @@ class Simulator:
                 percepts = self.__get_percepts(agent_num, states, env_conf)
                 action = agent.get_action(percepts)
                 actions[agent_num].append(action)
-                new_state = update_func(agent, action, states[agent_num], (costs, agent_num), env_conf)
+                new_state = update_func(agent, action, agent_num, states, (costs, agent_num), env_conf)
                 states[agent_num] = new_state
                 scores[agent_num] += performance_func(new_state, traveled_states, env_conf)
                 should_terminate = termination_func(states, agents)
@@ -40,10 +40,13 @@ class Simulator:
         return scores
 
     def __get_percepts(self, agent_num, states, env_conf):
-        return states[agent_num], env_conf
+        state = states[agent_num]
+        state.set_scores_of_agents((0, 0))  # reset the score
+        return state, env_conf
 
-    def update_func(self, agent: IAgent, action: str, current_state: State, costs_info: Tuple[List, int],
+    def update_func(self, agent: IAgent, action: str, agent_num: int, states: List[State], costs_info: Tuple[List, int],
                     env_conf: EnvironmentConfiguration):
+        current_state = states[agent_num - 1]
         vertex = env_conf.get_vertexes()[current_state.get_current_vertex_name()]
         vertex.set_state(current_state)
         new_state = EnvironmentUtils.get_next_vertex(vertex, action, agent.step_cost, env_conf).get_state()
@@ -51,7 +54,11 @@ class Simulator:
         costs, agent_num = costs_info
         edges_dict = env_conf.get_edges()
         if action in edges_dict.keys():
-            costs[agent_num] += edges_dict[action].get_weight()
+            edge_weight = edges_dict[action].get_weight()
+            costs[agent_num] += edge_weight
+            new_state.set_cost(current_state.get_cost() + edge_weight)
+        for state in states:
+            state.set_visited_vertex(current_state.get_current_vertex_name())
         return new_state
 
     def performance_func(self, new_state: State, traveled_states, env_config: EnvironmentConfiguration):
@@ -73,7 +80,7 @@ class Simulator:
             # calc actions without TRAVELLING steps
             temp = []
             for current_agent_action in actions:
-                temp.append([action for action in current_agent_action if action != 'TRAVELLING'])
+                temp.append([action for action in current_agent_action if action != 'TRAVELLING' and action is not None])
 
             print("----------------------------------")
             print("The step is over. Display the state of the world:")

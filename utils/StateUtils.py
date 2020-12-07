@@ -7,7 +7,7 @@ from data_structures.State import State
 class StateUtils:
 
     @staticmethod
-    def get_saved_people_num(state: State, current_traveled_states, env_conf: EnvironmentConfiguration) -> List[int]:
+    def get_saved_people_num(state: State, current_traveled_states, env_conf: EnvironmentConfiguration) -> int:
         score = 0
         traveled_vertexes = [vertex_name for vertex_name in StateUtils.get_state_traveled_vertexes(state) if
                              vertex_name not in current_traveled_states]

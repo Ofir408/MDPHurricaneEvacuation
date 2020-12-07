@@ -39,11 +39,20 @@ class EnvironmentUtils:
         vertexes_dict = env_config.get_vertexes()
         edges_dict = {k: v for k, v in env_config.get_edges().items() if k not in env_config.get_blocked_edges()}
         current_vertex = vertexes_dict[current_vertex_name]
-        names_of_edges = [edge for edge in current_vertex.get_edges() if edge not in env_config.get_blocked_edges()]
+        names_of_edges = [edge for edge in current_vertex.get_edges() if
+                          edge not in env_config.get_blocked_edges()
+                          and EnvironmentUtils.is_edge_reachable(edge, current_state, env_config)]
         possible_edges = []
         for edge_name in names_of_edges:
             possible_edges.append(edges_dict[edge_name])
         return possible_edges
+
+    @staticmethod
+    def is_edge_reachable(action: str, current_state: State, env_config: EnvironmentConfiguration):
+        deadline = env_config.get_deadline()
+        edge_cost = env_config.get_edges()[action].get_weight()
+        new_cost = current_state.get_cost() + edge_cost
+        return new_cost < deadline
 
     @staticmethod
     def get_required_vertexes(env_config: EnvironmentConfiguration) -> Dict[str, bool]:
@@ -55,12 +64,13 @@ class EnvironmentUtils:
 
     @staticmethod
     def get_next_vertex(current_vertex: Vertex, edge_name: str, step_cost: Callable,
-                        env_config: EnvironmentConfiguration) -> Vertex:
+                        env_config: EnvironmentConfiguration, is_max_player: bool = True) -> Vertex:
         """
 
         :param current_vertex: the current state
         :param edge_name: edge name from current vertex to the next vertex
         :param step_cost: function that receives parent_vertex, action, new_node and returns the step cost.
+        :param is_max_player: True if this is the max player, false otherwise
         :param env_config: environment configuration
         :return: The new vertex
         """
@@ -70,6 +80,7 @@ class EnvironmentUtils:
         vertexes_dict = env_config.get_vertexes()
         if edge_name not in edges_dict:
             current_vertex.set_state(current_state)
+            print("edge_name= ", edge_name)
             print("No operation for this agent")
             current_vertex.set_cost(
                 current_vertex.get_cost() + step_cost(current_vertex, Edge("", 0, ("", "")), current_vertex))
@@ -79,7 +90,14 @@ class EnvironmentUtils:
         first_vertex, sec_vertex = edge.get_vertex_names()
         next_vertex_name = first_vertex if sec_vertex == current_vertex_name else sec_vertex
         next_vertex = vertexes_dict[next_vertex_name]
-        next_state = State(next_vertex_name, copy.deepcopy(current_state.get_required_vertexes()))
+        scores_of_agents = current_state.get_scores_of_agents()
+        if next_vertex_name in current_state.get_required_vertexes() and not current_state.get_required_vertexes()[
+            next_vertex_name]:
+            scores_of_agents = (
+                scores_of_agents[0] + next_vertex.get_people_num(), scores_of_agents[1]) if is_max_player else (
+                scores_of_agents[0], scores_of_agents[1] + next_vertex.get_people_num())
+
+        next_state = State(next_vertex_name, scores_of_agents, copy.deepcopy(current_state.get_required_vertexes()))
         if next_vertex_name in current_state.get_required_vertexes():
             next_state.set_visited_vertex(next_vertex_name)
         next_vertex.set_state(next_state)
@@ -87,7 +105,8 @@ class EnvironmentUtils:
 
         new_next_vertex = Vertex(people_in_next_vertex, next_state, next_vertex.get_edges(),
                                  current_vertex, edge.get_edge_name(), current_vertex.get_depth(),
-                                 EnvironmentUtils.g(current_vertex, env_config) + step_cost(current_vertex, edge, next_vertex))
+                                 EnvironmentUtils.g(current_vertex, env_config) + step_cost(current_vertex, edge,
+                                                                                            next_vertex))
         return new_next_vertex
 
     @staticmethod
@@ -110,7 +129,7 @@ class EnvironmentUtils:
         goal_dict = {}
         for k, v in temp_dict.items():
             goal_dict[k] = True
-        goal_state = State("", goal_dict)
+        goal_state = State("", (-1, -1), goal_dict)
         return goal_state
 
     @staticmethod

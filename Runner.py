@@ -1,8 +1,5 @@
 from bl.Simulator import Simulator
-from bl.agents.part1.SaboteurAgent import SaboteurAgent
-from bl.agents.part2.AStarAgent import AStarAgent
-from bl.agents.part2.GreedyAgent import GreedyAgent
-from bl.agents.part2.RTAStarAgent import RTAStarAgent
+from bl.agents.adversarial_agents.MiniMaxAgent import MiniMaxAgent
 from configuration_reader.EnvironmentConfiguration import EnvironmentConfiguration
 from data_structures.State import State
 from utils.EnvironmentUtils import EnvironmentUtils
@@ -13,17 +10,17 @@ class Runner:
     def run(self, env_config: EnvironmentConfiguration):
         chosen_agents = []
         states = []
-        output_msg = "Choose Agent: \n 1) Greedy Agent\n 2) A* Agent\n 3) RTA* agent\n 4) Bonus: SaboteurAgent\n"
+        output_msg = "Choose Agent: \n 1) Adversarial Agent\n 2) Full Cooperative Agent\n 3) Semi Cooperative agent\n"
         num_of_agent = int(input("Enter number of agents\n"))
-        for _ in range(num_of_agent):
-            agent_num = int(input(output_msg))
+        agent_num = int(input(output_msg))
+        for i in range(num_of_agent):
             while agent_num > 4 or agent_num < 1:
                 print("Invalid agent number")
                 agent_num = int(input(output_msg))
             chosen_agents.append(self.__get_agent(agent_num))
             EnvironmentUtils.print_environment(env_config)
-            initial_state_name = input("Choose initial state\n")
-            states.append(State(initial_state_name, EnvironmentUtils.get_required_vertexes(env_config)))
+            initial_state_name = input("Choose initial state for agent{0}:\n".format(i + 1))
+            states.append(State(initial_state_name, (0, 0), EnvironmentUtils.get_required_vertexes(env_config)))
 
         simulator = Simulator()
         simulator.run_simulate(chosen_agents, simulator.update_func, simulator.terminate_func,
@@ -31,10 +28,8 @@ class Runner:
 
     def __get_agent(self, agent_num):
         if agent_num == 1:
-            return GreedyAgent()
+            return MiniMaxAgent(mode=MiniMaxAgent.ADVERSARIAL_MODE, cut_off_depth=10)
         elif agent_num == 2:
-            return AStarAgent()
+            return MiniMaxAgent(mode=MiniMaxAgent.COOPERATIVE_MODE, cut_off_depth=10)
         elif agent_num == 3:
-            return RTAStarAgent()
-        elif agent_num == 4:
-            return SaboteurAgent()
+            return MiniMaxAgent(mode=MiniMaxAgent.SEMI_COOPERATIVE_MODE, cut_off_depth=10)
