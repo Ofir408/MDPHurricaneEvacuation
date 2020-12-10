@@ -36,7 +36,7 @@ class Simulator:
                 states[agent_num] = new_state
                 scores[agent_num] += performance_func(new_state, traveled_states, env_conf)
                 should_terminate = termination_func(states, agents)
-                self.__display_word_state(agent_num, len(agents), actions, costs, scores, env_conf)
+                self.__display_word_state(agent_num, states, len(agents), actions, costs, scores, env_conf)
         return scores
 
     def __get_percepts(self, agent_num, states, env_conf):
@@ -46,7 +46,7 @@ class Simulator:
 
     def update_func(self, agent: IAgent, action: str, agent_num: int, states: List[State], costs_info: Tuple[List, int],
                     env_conf: EnvironmentConfiguration):
-        current_state = states[agent_num - 1]
+        current_state = states[agent_num]
         vertex = env_conf.get_vertexes()[current_state.get_current_vertex_name()]
         vertex.set_state(current_state)
         new_state = EnvironmentUtils.get_next_vertex(vertex, action, agent.step_cost, env_conf).get_state()
@@ -75,12 +75,13 @@ class Simulator:
         traveled_states = set().union(traveled_states)
         return len(traveled_states) == len(states[0].get_required_vertexes())
 
-    def __display_word_state(self, current_agent_num, agents_num, actions, costs, scores, env_config):
+    def __display_word_state(self, current_agent_num, states, agents_num, actions, costs, scores, env_config):
         if current_agent_num == agents_num - 1:
             # calc actions without TRAVELLING steps
             temp = []
             for current_agent_action in actions:
-                temp.append([action for action in current_agent_action if action != 'TRAVELLING' and action is not None])
+                temp.append(
+                    [action for action in current_agent_action if action != 'TRAVELLING' and action is not None])
 
             print("----------------------------------")
             print("The step is over. Display the state of the world:")
@@ -88,5 +89,6 @@ class Simulator:
             print("actions: ", actions)
             print("concise actions: ", temp)
             print("costs: ", costs)
+            print("states: ", [state.__str__() for state in states])
             print("scores: ", scores)
             print("----------------------------------")

@@ -1,3 +1,4 @@
+import copy
 from typing import Tuple
 
 from bl.agents.IAgent import IAgent
@@ -43,15 +44,15 @@ class MiniMaxAgent(IAgent):
 
     def minimax(self, state: State, action_to_state: str, depth: int, alpha: int, beta: int, is_max_player: bool,
                 env_config: EnvironmentConfiguration) -> Tuple[str, Tuple[int, int]]:
-        # print("action_to_state= ", action_to_state)
-        if TerminalEvaluator.should_terminate(state):
+        if TerminalEvaluator.was_deadline_passed(state, env_config.get_deadline()):
+            return None, TerminalEvaluator.terminate_eval(state.get_parent_state(), self.__mode, is_max_player)
+        if TerminalEvaluator.are_no_more_people(state):
             return action_to_state, TerminalEvaluator.terminate_eval(state, self.__mode, is_max_player)
         if depth == 0:
             return action_to_state, TerminalEvaluator.cut_off_utility_eval(state, is_max_player,
                                                                            env_config.get_vertexes())
         possible_edges = EnvironmentUtils.get_possible_moves(state, env_config)
         possible_actions = [edge.get_edge_name() for edge in possible_edges]
-
         if is_max_player:
             # Max Player
             best_action = None
@@ -60,10 +61,11 @@ class MiniMaxAgent(IAgent):
             best_score = None
 
             for action in possible_actions:
-                possible_next_state = self.__result(action, state, is_max_player, env_config)
+                possible_next_state = self.__result(action, copy.deepcopy(state), is_max_player, env_config)
                 is_max_next_player = False if self.__mode == MiniMaxAgent.ADVERSARIAL_MODE else True
-                new_action, scores = self.minimax(possible_next_state, action, depth - 1, alpha, beta,
+                new_action, scores = self.minimax(copy.deepcopy(possible_next_state), action, depth - 1, alpha, beta,
                                                   is_max_next_player, env_config)
+                print("cost of possible_next_state = ", possible_next_state.get_cost())
                 current_utility, opponent_utility = scores
                 if self.__is_better_score(max_utility_value, current_utility, max_opponent_utility, opponent_utility):
                     max_utility_value = current_utility
@@ -83,7 +85,7 @@ class MiniMaxAgent(IAgent):
 
             for action in possible_actions:
                 possible_next_state = self.__result(action, state, is_max_player, env_config)
-                _, scores = self.minimax(possible_next_state, action, depth - 1, alpha, beta, True, env_config)
+                _, scores = self.minimax(copy.deepcopy(possible_next_state), action, depth - 1, alpha, beta, True, env_config)
                 current_utility = scores[1]  # score of the minimum player
                 if current_utility < min_utility_value:
                     min_utility_value = current_utility

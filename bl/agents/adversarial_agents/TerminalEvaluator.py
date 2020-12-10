@@ -28,9 +28,13 @@ class TerminalEvaluator:
         return common_score, common_score  # the score of each player is common_score
 
     @staticmethod
-    def should_terminate(state: State):
+    def are_no_more_people(state: State):
         has_unvisited_state = False in state.get_required_vertexes().values()
         return not has_unvisited_state
+
+    @staticmethod
+    def was_deadline_passed(state: State, deadline):
+        return state.get_cost() > deadline
 
     @staticmethod
     def cut_off_utility_eval(state: State, is_max_player: bool, vertexes_dict: Dict[str, Vertex]) -> Tuple[int, int]:
@@ -45,6 +49,7 @@ class TerminalEvaluator:
             max_player_score += left_people_to_visit
         else:
             min_player_score += left_people_to_visit
+        print("cut_off= ", str((max_player_score, min_player_score)))
         return max_player_score, min_player_score
 
     @staticmethod

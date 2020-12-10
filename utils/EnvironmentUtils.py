@@ -40,19 +40,11 @@ class EnvironmentUtils:
         edges_dict = {k: v for k, v in env_config.get_edges().items() if k not in env_config.get_blocked_edges()}
         current_vertex = vertexes_dict[current_vertex_name]
         names_of_edges = [edge for edge in current_vertex.get_edges() if
-                          edge not in env_config.get_blocked_edges()
-                          and EnvironmentUtils.is_edge_reachable(edge, current_state, env_config)]
+                          edge not in env_config.get_blocked_edges()]
         possible_edges = []
         for edge_name in names_of_edges:
             possible_edges.append(edges_dict[edge_name])
         return possible_edges
-
-    @staticmethod
-    def is_edge_reachable(action: str, current_state: State, env_config: EnvironmentConfiguration):
-        deadline = env_config.get_deadline()
-        edge_cost = env_config.get_edges()[action].get_weight()
-        new_cost = current_state.get_cost() + edge_cost
-        return new_cost < deadline
 
     @staticmethod
     def get_required_vertexes(env_config: EnvironmentConfiguration) -> Dict[str, bool]:
@@ -97,16 +89,19 @@ class EnvironmentUtils:
                 scores_of_agents[0] + next_vertex.get_people_num(), scores_of_agents[1]) if is_max_player else (
                 scores_of_agents[0], scores_of_agents[1] + next_vertex.get_people_num())
 
-        next_state = State(next_vertex_name, scores_of_agents, copy.deepcopy(current_state.get_required_vertexes()))
+        next_state = State(next_vertex_name, scores_of_agents, copy.deepcopy(current_state.get_required_vertexes()),
+                           current_state.get_cost() + step_cost(current_vertex, edge, next_vertex))
+
         if next_vertex_name in current_state.get_required_vertexes():
             next_state.set_visited_vertex(next_vertex_name)
         next_vertex.set_state(next_state)
         people_in_next_vertex = next_vertex.get_people_num()
-
+        next_state.set_parent_state(current_state)
         new_next_vertex = Vertex(people_in_next_vertex, next_state, next_vertex.get_edges(),
                                  current_vertex, edge.get_edge_name(), current_vertex.get_depth(),
                                  EnvironmentUtils.g(current_vertex, env_config) + step_cost(current_vertex, edge,
                                                                                             next_vertex))
+
         return new_next_vertex
 
     @staticmethod

@@ -11,11 +11,12 @@ class State:
     """
 
     def __init__(self, current_vertex_name: str, scores_of_agents: Tuple[int, int],
-                 required_vertexes: Dict[str, bool] = None, cost: int = 0):
+                 required_vertexes: Dict[str, bool] = None, cost: int = 0, parent_state=None):
         self.__current_vertex = current_vertex_name
         self.__scores_of_agents = scores_of_agents
         self.__required_vertexes = required_vertexes
         self.__cost = cost
+        self.__parent_state = parent_state
 
     def set_visited_vertex(self, vertex_name: str):
         if vertex_name in self.__required_vertexes:
@@ -30,6 +31,9 @@ class State:
     def set_cost(self, cost):
         self.__cost = cost
 
+    def set_parent_state(self, parent_state):
+        self.__parent_state = parent_state
+
     def get_required_vertexes(self):
         return self.__required_vertexes
 
@@ -41,6 +45,9 @@ class State:
 
     def get_cost(self):
         return self.__cost
+
+    def get_parent_state(self):
+        return self.__parent_state
 
     def __eq__(self, other):
         return self.__current_vertex == other.get_current_vertex_name()
