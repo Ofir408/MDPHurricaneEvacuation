@@ -37,13 +37,16 @@ class MiniMaxAgent(IAgent):
             self._was_terminated = True
         else:
             self._distance_left_to_travel = env_config.get_edges()[best_action].get_weight()
+        if initial_state.get_cost() + env_config.get_edges()[best_action].get_weight() > env_config.get_deadline():
+            self._was_terminated = True
+            return None
         return best_action
 
     def step_cost(self, parent_node: Vertex, action: Edge, new_node: Vertex) -> int:
         return action.get_weight()
 
     def minimax(self, state: State, action_to_state: str, depth: int, alpha: int, beta: int, is_max_player: bool,
-                env_config: EnvironmentConfiguration) -> Tuple[str, Tuple[int, int]]:
+                env_config: EnvironmentConfiguration):
         if TerminalEvaluator.was_deadline_passed(state, env_config.get_deadline()):
             return None, TerminalEvaluator.terminate_eval(state.get_parent_state(), self.__mode, is_max_player)
         if TerminalEvaluator.are_no_more_people(state):
@@ -71,7 +74,7 @@ class MiniMaxAgent(IAgent):
                     max_utility_value = current_utility
                     max_opponent_utility = opponent_utility
                     best_score = scores
-                    best_action = new_action
+                    best_action = action
                 alpha = max(alpha, current_utility)
                 if self.__mode == MiniMaxAgent.ADVERSARIAL_MODE and beta <= alpha:
                     break
@@ -85,7 +88,8 @@ class MiniMaxAgent(IAgent):
 
             for action in possible_actions:
                 possible_next_state = self.__result(action, state, is_max_player, env_config)
-                _, scores = self.minimax(copy.deepcopy(possible_next_state), action, depth - 1, alpha, beta, True, env_config)
+                _, scores = self.minimax(copy.deepcopy(possible_next_state), action, depth - 1, alpha, beta, True,
+                                         env_config)
                 current_utility = scores[1]  # score of the minimum player
                 if current_utility < min_utility_value:
                     min_utility_value = current_utility

@@ -31,9 +31,8 @@ class Simulator:
             for agent_num, agent in enumerate(agents):
                 percepts = self.__get_percepts(agent_num, states, env_conf)
                 action = agent.get_action(percepts)
-                actions[agent_num].append(action)
-                new_state = update_func(agent, action, agent_num, states, (costs, agent_num), env_conf)
-                states[agent_num] = new_state
+                new_state = update_func(agent, action, actions, agent_num, states, (costs, agent_num), env_conf)
+                states[agent_num] = new_state if new_state is not None else states[agent_num]
                 scores[agent_num] += performance_func(new_state, traveled_states, env_conf)
                 should_terminate = termination_func(states, agents)
                 self.__display_word_state(agent_num, states, len(agents), actions, costs, scores, env_conf)
@@ -44,9 +43,15 @@ class Simulator:
         state.set_scores_of_agents((0, 0))  # reset the score
         return state, env_conf
 
-    def update_func(self, agent: IAgent, action: str, agent_num: int, states: List[State], costs_info: Tuple[List, int],
+    def update_func(self, agent: IAgent, action: str, actions, agent_num: int, states: List[State], costs_info: Tuple[List, int],
                     env_conf: EnvironmentConfiguration):
         current_state = states[agent_num]
+        # check if the deadline passed
+        deadline = env_conf.get_deadline()
+        if current_state.get_cost() > deadline:
+            return None
+
+        actions[agent_num].append(action)
         vertex = env_conf.get_vertexes()[current_state.get_current_vertex_name()]
         vertex.set_state(current_state)
         new_state = EnvironmentUtils.get_next_vertex(vertex, action, agent.step_cost, env_conf).get_state()
@@ -64,7 +69,6 @@ class Simulator:
     def performance_func(self, new_state: State, traveled_states, env_config: EnvironmentConfiguration):
         return StateUtils.get_saved_people_num(new_state, traveled_states, env_config)
 
-    # TODO: add deadline to terminate func
     def terminate_func(self, states: List[State], agents: List):
         should_terminate = len([agent for agent in agents if agent.was_terminated()]) == len(agents)
         if should_terminate:

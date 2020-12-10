@@ -58,7 +58,7 @@ class TerminalEvaluator:
             print("terminated state, utility= ",
                   TerminalEvaluator.adversarial_utility_eval(state.get_scores_of_agents()))
             return TerminalEvaluator.adversarial_utility_eval(state.get_scores_of_agents())
-        if mode == "semi_cooperative":
+        if mode == "semi-cooperative":
             return TerminalEvaluator.semi_cooperative_utility_eval(state.get_scores_of_agents())
         else:
             # cooperative mode
