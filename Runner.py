@@ -32,9 +32,9 @@ class Runner:
         if game_number == 1:
             return MiniMaxAgent(mode=MiniMaxAgent.ADVERSARIAL_MODE, cut_off_depth=20)
         elif game_number == 2:
-            return MiniMaxAgent(mode=MiniMaxAgent.COOPERATIVE_MODE, cut_off_depth=10)
+            return MiniMaxAgent(mode=MiniMaxAgent.FULL_COOPERATIVE_MODE, cut_off_depth=20)
         elif game_number == 3:
-            return MiniMaxAgent(mode=MiniMaxAgent.SEMI_COOPERATIVE_MODE, cut_off_depth=10)
+            return MiniMaxAgent(mode=MiniMaxAgent.SEMI_COOPERATIVE_MODE, cut_off_depth=20)
 
     def __print_final_scores(self, game_number, scores_of_agents):
         game_score = None
@@ -46,7 +46,7 @@ class Runner:
         if game_number == 1:
             game_score = TerminalEvaluator.terminate_eval(temp, MiniMaxAgent.ADVERSARIAL_MODE, is_max_player)
         elif game_number == 2:
-            game_score = TerminalEvaluator.terminate_eval(temp, MiniMaxAgent.COOPERATIVE_MODE, is_max_player)
+            game_score = TerminalEvaluator.terminate_eval(temp, MiniMaxAgent.FULL_COOPERATIVE_MODE, is_max_player)
         elif game_number == 3:
             game_score = TerminalEvaluator.terminate_eval(temp, MiniMaxAgent.SEMI_COOPERATIVE_MODE, is_max_player)
 

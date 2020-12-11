@@ -15,7 +15,7 @@ class MiniMaxAgent(IAgent):
     TRAVELLING = "TRAVELLING"
     ADVERSARIAL_MODE = "adversarial"
     SEMI_COOPERATIVE_MODE = "semi-cooperative"
-    COOPERATIVE_MODE = "full-cooperative"
+    FULL_COOPERATIVE_MODE = "full-cooperative"
 
     def __init__(self, mode: str, cut_off_depth: int):
         super().__init__()
@@ -33,7 +33,7 @@ class MiniMaxAgent(IAgent):
         best_action, best_utility = self.minimax(game_state, self.__is_max_player, "", self.__cut_off_depth, -10000000,
                                                  10000000, env_config)
         print("is_agent1={0}, best_action={1}, best_utility={2}".format(game_state.get_is_agent1_turn(), best_action,
-                                                                          best_utility))
+                                                                        best_utility))
         if best_action is None:
             self._was_terminated = True
         else:
@@ -50,7 +50,6 @@ class MiniMaxAgent(IAgent):
     # TODO: extend State to GameState that includes the states of 2 player. change minimax to simulate the other agent from his place.
     def minimax(self, game_state: GameState, is_max_player: bool, action_to_state: str, depth: int, alpha: int,
                 beta: int, env_config: EnvironmentConfiguration):
-        # TODO: set game_state !
         current_agent_state = game_state.get_current_state()
         is_agent1_turn = game_state.get_is_agent1_turn()
 
@@ -74,12 +73,12 @@ class MiniMaxAgent(IAgent):
             for action in possible_actions:
                 possible_next_state = self.__result(action, copy.deepcopy(current_agent_state), is_max_player,
                                                     env_config)
-                is_max_next_player = False if self.__mode == MiniMaxAgent.ADVERSARIAL_MODE else True
+                is_max_next_player = True if self.__mode == MiniMaxAgent.FULL_COOPERATIVE_MODE else False
                 new_game_state = self.__get_next_game_state(game_state, possible_next_state)
                 new_action, scores = self.minimax(copy.deepcopy(new_game_state), is_max_next_player, action,
                                                   depth - 1, alpha, beta, env_config)
                 current_utility, opponent_utility = scores
-                if self.__is_better_score(max_utility_value, current_utility, max_opponent_utility, opponent_utility):
+                if self.__is_better_score(max_utility_value, current_utility, max_opponent_utility, opponent_utility, is_max_player):
                     max_utility_value = current_utility
                     max_opponent_utility = opponent_utility
                     best_score = scores
@@ -92,6 +91,7 @@ class MiniMaxAgent(IAgent):
         else:
             # Min Player
             min_utility_value = 10000000
+            max_opponent_utility = -1000000
             best_action = None
             best_score = None
 
@@ -100,9 +100,11 @@ class MiniMaxAgent(IAgent):
                 new_game_state = self.__get_next_game_state(game_state, possible_next_state)
                 _, scores = self.minimax(copy.deepcopy(new_game_state), True, action,
                                          depth - 1, alpha, beta, env_config)
-                current_utility = scores[1]  # score of the minimum player
-                if current_utility < min_utility_value:
+                current_utility, opponent_utility = scores
+                # TODO: add is better score for semi-cooperative here.
+                if self.__is_better_score(min_utility_value, current_utility, max_opponent_utility, opponent_utility, is_max_player):
                     min_utility_value = current_utility
+                    max_opponent_utility = opponent_utility
                     best_score = scores
                     best_action = action
                 beta = min(beta, current_utility)
@@ -110,11 +112,11 @@ class MiniMaxAgent(IAgent):
                     break
             return best_action, best_score
 
-    def __is_better_score(self, max_utility_value, current_utility, max_opponent_utility, opponent_utility):
+    def __is_better_score(self, max_utility_value, current_utility, max_opponent_utility, opponent_utility, is_max):
         # Checking for semi-cooperative agent
         semi_cooperative_check = self.__mode == MiniMaxAgent.SEMI_COOPERATIVE_MODE and \
                                  max_utility_value == current_utility and max_opponent_utility < opponent_utility
-        normal_check = current_utility > max_utility_value
+        normal_check = current_utility > max_utility_value if is_max else current_utility < max_utility_value
         return semi_cooperative_check or normal_check
 
     def __result(self, action: str, state: State, is_max: bool, env_config: EnvironmentConfiguration) -> State:

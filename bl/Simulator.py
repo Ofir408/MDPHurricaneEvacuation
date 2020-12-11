@@ -33,7 +33,7 @@ class Simulator:
                 percepts = self.__get_percepts(agent_num, states, env_conf)
                 action = agent.get_action(percepts)
                 new_state = update_func(agent, action, actions, agent_num, states, (costs, agent_num), env_conf)
-                states[agent_num] = new_state if new_state is not None else states[agent_num]
+                states[agent_num] = new_state
                 scores[agent_num] += performance_func(new_state, traveled_states, env_conf)
                 should_terminate = termination_func(states, agents)
                 self.__display_word_state(agent_num, states, len(agents), actions, costs, scores, env_conf)
@@ -67,6 +67,7 @@ class Simulator:
             new_state.set_cost(current_state.get_cost() + edge_weight)
         for state in states:
             state.set_visited_vertex(current_state.get_current_vertex_name())
+        new_state.set_visited_vertex(current_state.get_current_vertex_name())
         return new_state
 
     def performance_func(self, new_state: State, traveled_states, env_config: EnvironmentConfiguration):
