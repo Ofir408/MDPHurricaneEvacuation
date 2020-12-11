@@ -45,6 +45,7 @@ class MiniMaxAgent(IAgent):
     def step_cost(self, parent_node: Vertex, action: Edge, new_node: Vertex) -> int:
         return action.get_weight()
 
+    # TODO: extend State to GameState that includes the states of 2 player. change minimax to simulate the other agent from his place.
     def minimax(self, state: State, action_to_state: str, depth: int, alpha: int, beta: int, is_max_player: bool,
                 env_config: EnvironmentConfiguration):
         if TerminalEvaluator.was_deadline_passed(state, env_config.get_deadline()):
