@@ -1,6 +1,7 @@
 from typing import List, Callable, Tuple
 
 from bl.agents import IAgent
+from bl.agents.adversarial_agents.GameState import GameState
 from configuration_reader import EnvironmentConfiguration
 from data_structures.State import State
 from utils.EnvironmentUtils import EnvironmentUtils
@@ -39,11 +40,13 @@ class Simulator:
         return scores
 
     def __get_percepts(self, agent_num, states, env_conf):
-        state = states[agent_num]
-        state.set_scores_of_agents((0, 0))  # reset the score
-        return state, env_conf
+        for state in states:
+            state.set_scores_of_agents((0, 0))  # reset the score
+        game_state = GameState(agent_num + 1 == 1, states[0], states[1])
+        return game_state, env_conf
 
-    def update_func(self, agent: IAgent, action: str, actions, agent_num: int, states: List[State], costs_info: Tuple[List, int],
+    def update_func(self, agent: IAgent, action: str, actions, agent_num: int, states: List[State],
+                    costs_info: Tuple[List, int],
                     env_conf: EnvironmentConfiguration):
         current_state = states[agent_num]
         # check if the deadline passed

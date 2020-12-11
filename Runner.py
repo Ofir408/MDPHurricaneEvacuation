@@ -30,7 +30,7 @@ class Runner:
 
     def __get_agent(self, game_number):
         if game_number == 1:
-            return MiniMaxAgent(mode=MiniMaxAgent.ADVERSARIAL_MODE, cut_off_depth=10)
+            return MiniMaxAgent(mode=MiniMaxAgent.ADVERSARIAL_MODE, cut_off_depth=20)
         elif game_number == 2:
             return MiniMaxAgent(mode=MiniMaxAgent.COOPERATIVE_MODE, cut_off_depth=10)
         elif game_number == 3:

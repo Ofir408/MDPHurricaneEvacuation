@@ -2,6 +2,7 @@ import copy
 from typing import Tuple
 
 from bl.agents.IAgent import IAgent
+from bl.agents.adversarial_agents.GameState import GameState
 from bl.agents.adversarial_agents.TerminalEvaluator import TerminalEvaluator
 from configuration_reader.EnvironmentConfiguration import EnvironmentConfiguration
 from data_structures.Edge import Edge
@@ -22,21 +23,22 @@ class MiniMaxAgent(IAgent):
         self.__cut_off_depth = cut_off_depth
         self.__is_max_player = True
 
-    def get_action(self, percepts: Tuple[State, EnvironmentConfiguration]) -> str:
+    def get_action(self, percepts: Tuple[GameState, EnvironmentConfiguration]) -> str:
         if self.is_travelling():
             self._distance_left_to_travel -= 1  # Travel this step
             return MiniMaxAgent.TRAVELLING
 
-        initial_state, env_config = percepts
-        print("initial_state= ", initial_state)
-        best_action, best_utility = self.minimax(initial_state, "", self.__cut_off_depth, -10000000, 10000000,
-                                                 self.__is_max_player, env_config)
-        print("max_player? {0}, best_action={1}, best_utility={2}".format(self.__is_max_player, best_action,
+        game_state, env_config = percepts
+        print("initial_game_state= ", game_state)
+        best_action, best_utility = self.minimax(game_state, self.__is_max_player, "", self.__cut_off_depth, -10000000,
+                                                 10000000, env_config)
+        print("is_agent1={0}, best_action={1}, best_utility={2}".format(game_state.get_is_agent1_turn(), best_action,
                                                                           best_utility))
         if best_action is None:
             self._was_terminated = True
         else:
             self._distance_left_to_travel = env_config.get_edges()[best_action].get_weight()
+        initial_state = game_state.get_agent1_state() if game_state.get_is_agent1_turn() else game_state.get_agent2_state()
         if initial_state.get_cost() + env_config.get_edges()[best_action].get_weight() > env_config.get_deadline():
             self._was_terminated = True
             return None
@@ -46,16 +48,21 @@ class MiniMaxAgent(IAgent):
         return action.get_weight()
 
     # TODO: extend State to GameState that includes the states of 2 player. change minimax to simulate the other agent from his place.
-    def minimax(self, state: State, action_to_state: str, depth: int, alpha: int, beta: int, is_max_player: bool,
-                env_config: EnvironmentConfiguration):
-        if TerminalEvaluator.was_deadline_passed(state, env_config.get_deadline()):
-            return None, TerminalEvaluator.terminate_eval(state.get_parent_state(), self.__mode, is_max_player)
-        if TerminalEvaluator.are_no_more_people(state):
-            return action_to_state, TerminalEvaluator.terminate_eval(state, self.__mode, is_max_player)
+    def minimax(self, game_state: GameState, is_max_player: bool, action_to_state: str, depth: int, alpha: int,
+                beta: int, env_config: EnvironmentConfiguration):
+        # TODO: set game_state !
+        current_agent_state = game_state.get_current_state()
+        is_agent1_turn = game_state.get_is_agent1_turn()
+
+        if TerminalEvaluator.was_deadline_passed(current_agent_state, env_config.get_deadline()):
+            return None, TerminalEvaluator.terminate_eval(current_agent_state.get_parent_state(), self.__mode,
+                                                          is_agent1_turn)
+        if TerminalEvaluator.are_no_more_people(current_agent_state):
+            return action_to_state, TerminalEvaluator.terminate_eval(current_agent_state, self.__mode, is_agent1_turn)
         if depth == 0:
-            return action_to_state, TerminalEvaluator.cut_off_utility_eval(state, is_max_player,
+            return action_to_state, TerminalEvaluator.cut_off_utility_eval(current_agent_state, is_agent1_turn,
                                                                            env_config.get_vertexes())
-        possible_edges = EnvironmentUtils.get_possible_moves(state, env_config)
+        possible_edges = EnvironmentUtils.get_possible_moves(current_agent_state, env_config)
         possible_actions = [edge.get_edge_name() for edge in possible_edges]
         if is_max_player:
             # Max Player
@@ -65,11 +72,12 @@ class MiniMaxAgent(IAgent):
             best_score = None
 
             for action in possible_actions:
-                possible_next_state = self.__result(action, copy.deepcopy(state), is_max_player, env_config)
+                possible_next_state = self.__result(action, copy.deepcopy(current_agent_state), is_max_player,
+                                                    env_config)
                 is_max_next_player = False if self.__mode == MiniMaxAgent.ADVERSARIAL_MODE else True
-                new_action, scores = self.minimax(copy.deepcopy(possible_next_state), action, depth - 1, alpha, beta,
-                                                  is_max_next_player, env_config)
-                print("cost of possible_next_state = ", possible_next_state.get_cost())
+                new_game_state = self.__get_next_game_state(game_state, possible_next_state)
+                new_action, scores = self.minimax(copy.deepcopy(new_game_state), is_max_next_player, action,
+                                                  depth - 1, alpha, beta, env_config)
                 current_utility, opponent_utility = scores
                 if self.__is_better_score(max_utility_value, current_utility, max_opponent_utility, opponent_utility):
                     max_utility_value = current_utility
@@ -88,9 +96,10 @@ class MiniMaxAgent(IAgent):
             best_score = None
 
             for action in possible_actions:
-                possible_next_state = self.__result(action, state, is_max_player, env_config)
-                _, scores = self.minimax(copy.deepcopy(possible_next_state), action, depth - 1, alpha, beta, True,
-                                         env_config)
+                possible_next_state = self.__result(action, current_agent_state, is_max_player, env_config)
+                new_game_state = self.__get_next_game_state(game_state, possible_next_state)
+                _, scores = self.minimax(copy.deepcopy(new_game_state), True, action,
+                                         depth - 1, alpha, beta, env_config)
                 current_utility = scores[1]  # score of the minimum player
                 if current_utility < min_utility_value:
                     min_utility_value = current_utility
@@ -118,3 +127,14 @@ class MiniMaxAgent(IAgent):
         next_vertex = env_config.get_vertexes()[state.get_current_vertex_name()]
         next_vertex.set_state(state)
         return EnvironmentUtils.get_next_vertex(next_vertex, action, self.step_cost, env_config, is_max).get_state()
+
+    def __get_next_game_state(self, current_game_state: GameState, current_agent_next_state: State) -> GameState:
+        is_agent1_current_turn = current_game_state.get_is_agent1_turn()
+        next_agent_turn = not is_agent1_current_turn
+        next_game = copy.deepcopy(current_game_state)
+        if is_agent1_current_turn:
+            next_game.set_agent1_state(current_agent_next_state)
+        else:
+            next_game.set_agent2_state(current_agent_next_state)
+        next_game.set_is_agent1_turn(next_agent_turn)
+        return next_game
