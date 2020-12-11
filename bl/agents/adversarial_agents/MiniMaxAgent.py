@@ -13,6 +13,7 @@ from utils.EnvironmentUtils import EnvironmentUtils
 
 class MiniMaxAgent(IAgent):
     TRAVELLING = "TRAVELLING"
+    DONE = "DONE"
     ADVERSARIAL_MODE = "adversarial"
     SEMI_COOPERATIVE_MODE = "semi-cooperative"
     FULL_COOPERATIVE_MODE = "full-cooperative"
@@ -26,6 +27,8 @@ class MiniMaxAgent(IAgent):
     def get_action(self, percepts: Tuple[GameState, EnvironmentConfiguration]) -> str:
         if self.is_travelling():
             self._distance_left_to_travel -= 1  # Travel this step
+            if self._distance_left_to_travel == 0:
+                return MiniMaxAgent.DONE
             return MiniMaxAgent.TRAVELLING
 
         game_state, env_config = percepts
@@ -47,7 +50,6 @@ class MiniMaxAgent(IAgent):
     def step_cost(self, parent_node: Vertex, action: Edge, new_node: Vertex) -> int:
         return action.get_weight()
 
-    # TODO: extend State to GameState that includes the states of 2 player. change minimax to simulate the other agent from his place.
     def minimax(self, game_state: GameState, is_max_player: bool, action_to_state: str, depth: int, alpha: int,
                 beta: int, env_config: EnvironmentConfiguration):
         current_agent_state = game_state.get_current_state()
@@ -78,6 +80,7 @@ class MiniMaxAgent(IAgent):
                 new_action, scores = self.minimax(copy.deepcopy(new_game_state), is_max_next_player, action,
                                                   depth - 1, alpha, beta, env_config)
                 current_utility, opponent_utility = scores
+                print("is_agent1={0}, best_action={1}, best_score={2} ".format(is_agent1_turn, best_action, best_score))
                 if self.__is_better_score(max_utility_value, current_utility, max_opponent_utility, opponent_utility, is_max_player):
                     max_utility_value = current_utility
                     max_opponent_utility = opponent_utility
@@ -86,6 +89,7 @@ class MiniMaxAgent(IAgent):
                 alpha = max(alpha, current_utility)
                 if self.__mode == MiniMaxAgent.ADVERSARIAL_MODE and beta <= alpha:
                     break
+            #print("is_agent1={0}, best_action={1}, best_score={2} ".format(is_agent1_turn, best_action, best_score))
             return best_action, best_score
 
         else:
