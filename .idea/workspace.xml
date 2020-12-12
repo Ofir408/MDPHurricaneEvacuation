@@ -20,25 +20,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="df0338cc-b0e3-45da-aa22-62190f9ec9bb" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/initial_configurations/improved_short_example.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bl/Simulator.py" beforeDir="false" afterPath="$PROJECT_DIR$/bl/Simulator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bl/agents/IAgent.py" beforeDir="false" afterPath="$PROJECT_DIR$/bl/agents/IAgent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bl/agents/adversarial_agents/GameState.py" beforeDir="false" afterPath="$PROJECT_DIR$/bl/agents/adversarial_agents/GameState.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bl/agents/adversarial_agents/MiniMaxAgent.py" beforeDir="false" afterPath="$PROJECT_DIR$/bl/agents/adversarial_agents/MiniMaxAgent.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bl/agents/part1/GreedyWeightAgent.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bl/agents/part1/HumanAgent.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bl/agents/part1/SaboteurAgent.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bl/agents/part1/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/bl/agents/adversarial_agents/GameState.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bl/agents/part2/AStarAgent.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bl/agents/part2/GreedyAgent.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bl/agents/part2/ITreeSearchAgent.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bl/agents/part2/RTAStarAgent.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bl/agents/part2/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bl/search_tree/AStarSearchTree.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bl/search_tree/GreedySearchTree.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bl/search_tree/IGeneralSearchTree.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bl/search_tree/UniformCostSearchTree.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bl/search_tree/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bl/search_tree/heuristic_functions/IHueristicFunc.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bl/search_tree/heuristic_functions/LeftVertexesToVisitFunc.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bl/search_tree/heuristic_functions/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_structures/State.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_structures/State.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/initial_configurations/example2.ascii" beforeDir="false" afterPath="$PROJECT_DIR$/initial_configurations/example2.ascii" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/initial_configurations/full_cooperative_example.ascii" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/initial_configurations/my_graph.txt" beforeDir="false" afterPath="$PROJECT_DIR$/initial_configurations/my_graph.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/initial_configurations/short_example.ascii" beforeDir="false" afterPath="$PROJECT_DIR$/initial_configurations/short_example.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +46,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="d09b10b2c972c595637d4a90e73a97bebd831200" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1khr5nwDyOQ4DRlkXV3QjWrGdDP" />
@@ -62,11 +60,12 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/bl/agents" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/initial_configurations" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Ofir\PycharmProjects\ofir\AI_Hurricane_Evacuation\initial_configurations" />
       <recent name="C:\Users\Ofir\PycharmProjects\ofir\AI_Hurricane_Evacuation\bl\agents" />
     </key>
   </component>
@@ -92,7 +91,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="Main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="AI_Hurricane_Evacuation" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -105,7 +104,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Main.py" />
-      <option name="PARAMETERS" value="initial_configurations/my_graph.txt" />
+      <option name="PARAMETERS" value="initial_configurations/example2.ascii" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -135,14 +134,15 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.ConfigurationReader" />
       <item itemvalue="Python.Main" />
+      <item itemvalue="Python.ConfigurationReader" />
       <item itemvalue="Python.a" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Main" />
+        <item itemvalue="Python.a" />
         <item itemvalue="Python.ConfigurationReader" />
+        <item itemvalue="Python.Main" />
         <item itemvalue="Python.a" />
       </list>
     </recent_temporary>
@@ -183,7 +183,25 @@
       <option name="presentableId" value="LOCAL‎00004" />
       <updated>1607644689237</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL‎00005" summary="Without distance calculation (distance to move on an edge)">
+      <created>1607685770726</created>
+      <option name="number" value="LOCAL‎00005" />
+      <option name="presentableId" value="LOCAL‎00005" />
+      <updated>1607685770726</updated>
+    </task>
+    <task id="LOCAL‎00006" summary="Breaking ties cooperatively for semi-cooperative agent">
+      <created>1607696786394</created>
+      <option name="number" value="LOCAL‎00006" />
+      <option name="presentableId" value="LOCAL‎00006" />
+      <updated>1607696786394</updated>
+    </task>
+    <task id="LOCAL‎00007" summary="temp">
+      <created>1607706098893</created>
+      <option name="number" value="LOCAL‎00007" />
+      <option name="presentableId" value="LOCAL‎00007" />
+      <updated>1607706098893</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -204,77 +222,92 @@
     <MESSAGE value="Simulator works according steps (travelling step is included)" />
     <MESSAGE value="Added MiniMax &amp; Cooperative Agents" />
     <MESSAGE value="Fixed bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed bugs" />
+    <MESSAGE value="Without distance calculation (distance to move on an edge)" />
+    <MESSAGE value="Breaking ties cooperatively for semi-cooperative agent" />
+    <MESSAGE value="temp" />
+    <option name="LAST_COMMIT_MESSAGE" value="temp" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="410" y="167" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607676740705">
+    <state x="602" y="134" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607777457332">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="410" y="167" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607676740705" />
+    <state x="602" y="134" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607777457332" />
     <state x="624" y="207" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1607104597118">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="624" y="207" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607104597118" />
-    <state x="532" y="13" key="CommitChangelistDialog2" timestamp="1607644688803">
+    <state x="532" y="13" key="CommitChangelistDialog2" timestamp="1607706098549">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="532" y="13" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1607644688803" />
-    <state width="1427" height="566" key="DebuggerActiveHint" timestamp="1607636633545">
+    <state x="532" y="13" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1607706098549" />
+    <state width="1428" height="566" key="DebuggerActiveHint" timestamp="1607771204119">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1427" height="566" key="DebuggerActiveHint/0.0.1920.1040@0.0.1920.1040" timestamp="1607636633545" />
-    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1607644966851">
+    <state width="1428" height="566" key="DebuggerActiveHint/0.0.1920.1040@0.0.1920.1040" timestamp="1607771204119" />
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1607782594794">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607644966851" />
-    <state width="1892" height="234" key="GridCell.Tab.0.bottom" timestamp="1607676752313">
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607782594794" />
+    <state width="1892" height="248" key="GridCell.Tab.0.bottom" timestamp="1607782473527">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1572" height="234" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1606308091913" />
-    <state width="1892" height="234" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607676752313" />
-    <state width="1892" height="234" key="GridCell.Tab.0.center" timestamp="1607676752312">
+    <state width="1892" height="248" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607782473527" />
+    <state width="1892" height="248" key="GridCell.Tab.0.center" timestamp="1607782473526">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1572" height="234" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1606308091912" />
-    <state width="1892" height="234" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607676752312" />
-    <state width="1892" height="234" key="GridCell.Tab.0.left" timestamp="1607676752312">
+    <state width="1892" height="248" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607782473526" />
+    <state width="1892" height="248" key="GridCell.Tab.0.left" timestamp="1607782473526">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1572" height="234" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1606308091912" />
-    <state width="1892" height="234" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607676752312" />
-    <state width="1892" height="234" key="GridCell.Tab.0.right" timestamp="1607676752312">
+    <state width="1892" height="248" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607782473526" />
+    <state width="1892" height="248" key="GridCell.Tab.0.right" timestamp="1607782473527">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1572" height="234" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1606308091912" />
-    <state width="1892" height="234" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607676752312" />
-    <state width="1892" height="251" key="GridCell.Tab.1.bottom" timestamp="1607637409602">
+    <state width="1892" height="248" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607782473527" />
+    <state width="1892" height="273" key="GridCell.Tab.1.bottom" timestamp="1607771598567">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1892" height="251" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607637409602" />
-    <state width="1892" height="251" key="GridCell.Tab.1.center" timestamp="1607637409602">
+    <state width="1892" height="273" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607771598567" />
+    <state width="1892" height="273" key="GridCell.Tab.1.center" timestamp="1607771598567">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1892" height="251" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607637409602" />
-    <state width="1892" height="251" key="GridCell.Tab.1.left" timestamp="1607637409602">
+    <state width="1892" height="273" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607771598567" />
+    <state width="1892" height="273" key="GridCell.Tab.1.left" timestamp="1607771598567">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1892" height="251" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607637409602" />
-    <state width="1892" height="251" key="GridCell.Tab.1.right" timestamp="1607637409602">
+    <state width="1892" height="273" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607771598567" />
+    <state width="1892" height="273" key="GridCell.Tab.1.right" timestamp="1607771598567">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1892" height="251" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607637409602" />
+    <state width="1892" height="273" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607771598567" />
+    <state x="184" y="85" key="MergeDialog" timestamp="1607708565946">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="184" y="85" key="MergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607708565946" />
+    <state x="670" y="153" key="RollbackChangesDialog" timestamp="1607718505964">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="670" y="153" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607718505964" />
     <state x="351" y="63" key="SettingsEditor" timestamp="1607073277157">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="351" y="63" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1607073277157" />
-    <state x="452" y="189" key="Vcs.Push.Dialog.v2" timestamp="1607644690494">
+    <state x="452" y="189" key="Vcs.Push.Dialog.v2" timestamp="1607706100755">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="452" y="189" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1607644690494" />
-    <state x="605" y="188" width="710" height="746" key="find.popup" timestamp="1607637305088">
+    <state x="452" y="189" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1607706100755" />
+    <state x="605" y="188" width="710" height="746" key="find.popup" timestamp="1607770077310">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="605" y="188" width="710" height="746" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607637305088" />
+    <state x="605" y="188" width="710" height="746" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607770077310" />
+    <state x="641" y="164" key="git4idea.branch.GitSmartOperationDialog" timestamp="1607710233895">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="641" y="164" key="git4idea.branch.GitSmartOperationDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607710233895" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -286,29 +319,19 @@
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/bl/Simulator.py</url>
+          <line>36</line>
+          <option name="timeStamp" value="94" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/bl/agents/adversarial_agents/MiniMaxAgent.py</url>
-          <line>41</line>
-          <option name="timeStamp" value="55" />
+          <line>74</line>
+          <option name="timeStamp" value="109" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/bl/Simulator.py</url>
-          <line>51</line>
-          <option name="timeStamp" value="56" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Runner.py</url>
-          <line>50</line>
-          <option name="timeStamp" value="57" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/bl/agents/adversarial_agents/TerminalEvaluator.py</url>
-          <line>56</line>
-          <option name="timeStamp" value="58" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/bl/Simulator.py</url>
-          <line>34</line>
-          <option name="timeStamp" value="59" />
+          <url>file://$PROJECT_DIR$/bl/agents/adversarial_agents/MiniMaxAgent.py</url>
+          <line>48</line>
+          <option name="timeStamp" value="111" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

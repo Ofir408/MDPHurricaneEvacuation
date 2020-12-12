@@ -19,6 +19,9 @@ class GameState:
     def get_current_state(self):
         return self.__agent1_state if self.__is_agent1_turn else self.__agent2_state
 
+    def get_other_state(self):
+        return self.__agent2_state if self.__is_agent1_turn else self.__agent1_state
+
     def set_agent1_state(self, new_state):
         self.__agent1_state = new_state
 
