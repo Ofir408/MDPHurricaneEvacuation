@@ -41,8 +41,7 @@ class Simulator:
                 new_state = update_func(agent, action, actions, vertexes_paths, agent_num, states, (costs, agent_num),
                                         env_conf)
                 states[agent_num] = copy.deepcopy(new_state)
-                scores[agent_num] += performance_func(new_state if action is None else new_state.get_parent_state(),
-                                                      traveled_states, env_conf)
+                scores[agent_num] += performance_func(new_state, action, traveled_states, env_conf)
                 should_terminate = termination_func([states[0].get_parent_state(), states[1].get_parent_state()],
                                                     agents, action)
             else:
@@ -67,8 +66,7 @@ class Simulator:
             return None
 
         actions[agent_num].append(action)
-        if action != 'TRAVELLING' and action != 'DONE':
-            vertexes_paths[agent_num].append(current_state.get_current_vertex_name())
+        vertexes_paths[agent_num].append(current_state.get_current_vertex_name())
         vertex = env_conf.get_vertexes()[current_state.get_current_vertex_name()]
         vertex.set_state(current_state)
         new_state = EnvironmentUtils.get_next_vertex(vertex, action, agent.step_cost, env_conf).get_state()
@@ -83,12 +81,18 @@ class Simulator:
         for state in states:
             state.set_visited_vertex(current_state.get_current_vertex_name())
         new_state.set_visited_vertex(current_state.get_current_vertex_name())
+        if current_state.get_current_vertex_name() != new_state.get_current_vertex_name():
+            vertexes_paths[agent_num].append(new_state.get_current_vertex_name())
+
         return new_state
 
-    def performance_func(self, new_state: State, traveled_states, env_config: EnvironmentConfiguration):
-        if new_state.get_distance() > 0:
+    def performance_func(self, new_state: State, action, traveled_states, env_config: EnvironmentConfiguration):
+        temp = new_state if action is None else new_state.get_parent_state()
+        if temp.get_distance() > 0:
             return 0
-        return StateUtils.get_saved_people_num(new_state, traveled_states, env_config)
+        if new_state.get_distance() == 0:
+            temp = new_state
+        return StateUtils.get_saved_people_num(temp, traveled_states, env_config)
 
     def terminate_func(self, states: List[State], agents: List, action: str):
         should_terminate = len([agent for agent in agents if agent.was_terminated()]) == len(agents)
@@ -110,12 +114,20 @@ class Simulator:
             temp.append(
                 [action for action in current_agent_action if action != 'TRAVELLING' and
                  action != 'DONE' and action is not None])
-
+        last_element = None
+        temp_lists = []
+        for y in vertices_paths:
+            temp_vertices = []
+            for x in y:
+                if x != last_element:
+                    last_element = x
+                    temp_vertices.append(x)
+            temp_lists.append(copy.deepcopy(temp_vertices))
             print("----------------------------------")
             print("The step is over. Display the state of the world:")
             EnvironmentUtils.print_environment(env_config)
             print("concise actions: ", temp)
-            print("vertices paths: ", vertices_paths)
+            print("vertices paths: ", temp_lists)
             print("costs: ", costs)
             print("scores: ", scores)
             print("----------------------------------")
