@@ -35,7 +35,6 @@ class Simulator:
         while not should_terminate:
             agent = agents[agent_num]
             percepts = self.__get_percepts(agent_num, states, env_conf)
-            states[agent_num].set_distance(0)
             if states[agent_num].get_distance() == 0:
                 action = agent.get_action(percepts)
                 new_state = update_func(agent, action, actions, vertexes_paths, agent_num, states, (costs, agent_num),
@@ -53,6 +52,7 @@ class Simulator:
     def __get_percepts(self, agent_num, states, env_conf):
         for state in states:
             state.set_scores_of_agents((0, 0))  # reset the score
+        states[agent_num].set_distance(0)
         game_state = GameState(agent_num + 1 == 1, states[0], states[1])
         return game_state, env_conf
 
