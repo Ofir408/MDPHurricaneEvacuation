@@ -31,7 +31,8 @@ class MiniMaxAgent(IAgent):
         other_state = duplicate_game_state.get_agent2_state() if duplicate_game_state.get_is_agent1_turn() else duplicate_game_state.get_agent1_state()
         other_state.set_visited_vertex(other_state.get_current_vertex_name())
 
-        best_action, best_utility = self.minimax(duplicate_game_state, self.__is_max_player, "", self.__cut_off_depth, -10000000,
+        best_action, best_utility = self.minimax(duplicate_game_state, self.__is_max_player, "", self.__cut_off_depth,
+                                                 -10000000,
                                                  10000000, env_config)
         if best_action is None or best_action == "":
             self._was_terminated = True
@@ -68,8 +69,8 @@ class MiniMaxAgent(IAgent):
             best_score = None
 
             for action in reversed(possible_actions):
-                possible_next_state = self.__result(action, copy.deepcopy(current_agent_state), [x for x in other_agent_state.get_required_vertexes() if x],
-                                                    is_max_player, env_config)
+                possible_next_state = self.__result(action, copy.deepcopy(current_agent_state), is_max_player,
+                                                    env_config)
                 is_max_next_player = True if self.__mode == MiniMaxAgent.FULL_COOPERATIVE_MODE else False
                 new_game_state = self.__get_next_game_state(game_state, possible_next_state)
                 new_action, scores = self.minimax(copy.deepcopy(new_game_state), is_max_next_player, action,
@@ -94,8 +95,7 @@ class MiniMaxAgent(IAgent):
             best_score = None
 
             for action in possible_actions:
-                possible_next_state = self.__result(action, current_agent_state, [x for x in other_agent_state.get_required_vertexes() if x],
-                                                    is_max_player, env_config)
+                possible_next_state = self.__result(action, current_agent_state, is_max_player, env_config)
                 new_game_state = self.__get_next_game_state(game_state, possible_next_state)
                 _, scores = self.minimax(copy.deepcopy(new_game_state), True, action,
                                          depth - 1, alpha, beta, env_config)
@@ -125,7 +125,7 @@ class MiniMaxAgent(IAgent):
                     return True
         return False
 
-    def __result(self, action: str, state: State, traveled_states, is_max: bool, env_config: EnvironmentConfiguration) -> State:
+    def __result(self, action: str, state: State, is_max: bool, env_config: EnvironmentConfiguration) -> State:
         """
 
         :param action: edge name
@@ -134,8 +134,6 @@ class MiniMaxAgent(IAgent):
         """
         temp = copy.deepcopy(state)
         next_vertex = env_config.get_vertexes()[temp.get_current_vertex_name()]
-        #for traveled_state_name in traveled_states:
-        #    temp.set_visited_vertex(traveled_state_name)
         next_vertex.set_state(temp)
         return EnvironmentUtils.get_next_vertex(next_vertex, action, self.step_cost, env_config, is_max).get_state()
 
