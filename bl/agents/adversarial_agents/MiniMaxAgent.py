@@ -48,7 +48,6 @@ class MiniMaxAgent(IAgent):
     def minimax(self, game_state: GameState, is_max_player: bool, action_to_state: str, depth: int, alpha: int,
                 beta: int, env_config: EnvironmentConfiguration):
         current_agent_state = game_state.get_current_state()
-        other_agent_state = game_state.get_other_state()
         is_agent1_turn = game_state.get_is_agent1_turn()
 
         if TerminalEvaluator.was_deadline_passed(current_agent_state, env_config.get_deadline()):
