@@ -100,7 +100,6 @@ class MiniMaxAgent(IAgent):
                 _, scores = self.minimax(copy.deepcopy(new_game_state), True, action,
                                          depth - 1, alpha, beta, env_config)
                 current_utility, opponent_utility = scores
-                # TODO: add is better score for semi-cooperative here.
                 if self.__is_better_score(min_utility_value, current_utility, max_opponent_utility, opponent_utility,
                                           is_max_player):
                     min_utility_value = current_utility
