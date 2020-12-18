@@ -1,9 +1,8 @@
 import copy
-from typing import List, Dict, Callable
+from typing import List, Callable
 
 from configuration_reader.EnvironmentConfiguration import EnvironmentConfiguration
 from data_structures.Edge import Edge
-from data_structures.State import State
 from data_structures.Vertex import Vertex
 
 
@@ -12,20 +11,20 @@ class EnvironmentUtils:
     _VERTEX_PREFIX = "#V"
     _WEIGHT_PREFIX = "W"
     _SPACE_SEPARATOR = " "
-    _DEADLINE_PREFIX = "#D"
+    _PERSISTENCE_PREFIX = "#Ppersistence"
     _NUMBER_OF_VERTICES_PREFIX = "#N"
-    _PERSONS_NUM_PREFIX = "P"
+    _PERSONS_NUM_PREFIX = "F"
 
     @staticmethod
     def print_environment(env_config: EnvironmentConfiguration):
         num_of_vertex = env_config.get_vertices_num()
-        deadline = env_config.get_deadline()
+        persistence = env_config.get_persistence()
         edges_dict = env_config.get_edges()
         vertexes_dict = env_config.get_vertexes()
 
         print(EnvironmentUtils._NUMBER_OF_VERTICES_PREFIX + EnvironmentUtils._SPACE_SEPARATOR + str(
             num_of_vertex))
-        print(EnvironmentUtils._DEADLINE_PREFIX + EnvironmentUtils._SPACE_SEPARATOR + str(deadline))
+        print(EnvironmentUtils._PERSISTENCE_PREFIX + EnvironmentUtils._SPACE_SEPARATOR + str(persistence))
 
         for vertex in vertexes_dict.values():
             EnvironmentUtils.__print_vertex(vertex)
@@ -34,8 +33,8 @@ class EnvironmentUtils:
         print("Blocked edges: ", env_config.get_blocked_edges())
 
     @staticmethod
-    def get_possible_moves(current_state: State, env_config: EnvironmentConfiguration) -> List[Edge]:
-        current_vertex_name = current_state.get_current_vertex_name()
+    def get_possible_moves(current_vertex: Vertex, env_config: EnvironmentConfiguration) -> List[Edge]:
+        current_vertex_name = current_vertex.get_vertex_name()
         vertexes_dict = env_config.get_vertexes()
         edges_dict = {k: v for k, v in env_config.get_edges().items() if k not in env_config.get_blocked_edges()}
         current_vertex = vertexes_dict[current_vertex_name]
@@ -45,14 +44,6 @@ class EnvironmentUtils:
         for edge_name in names_of_edges:
             possible_edges.append(edges_dict[edge_name])
         return possible_edges
-
-    @staticmethod
-    def get_required_vertexes(env_config: EnvironmentConfiguration) -> Dict[str, bool]:
-        required_vertexes = {}
-        for vertex_name in env_config.get_vertexes().values():
-            if vertex_name.get_people_num() > 0:
-                required_vertexes[vertex_name.get_vertex_name()] = False
-        return required_vertexes
 
     @staticmethod
     def get_next_vertex(current_vertex: Vertex, edge_name: str, step_cost: Callable,
@@ -82,27 +73,7 @@ class EnvironmentUtils:
         first_vertex, sec_vertex = edge.get_vertex_names()
         next_vertex_name = first_vertex if sec_vertex == current_vertex_name else sec_vertex
         next_vertex = vertexes_dict[next_vertex_name]
-        scores_of_agents = current_state.get_scores_of_agents()
-        if next_vertex_name in current_state.get_required_vertexes() and not current_state.get_required_vertexes()[
-            next_vertex_name]:
-            scores_of_agents = (
-                scores_of_agents[0] + next_vertex.get_people_num(), scores_of_agents[1]) if is_max_player else (
-                scores_of_agents[0], scores_of_agents[1] + next_vertex.get_people_num())
-
-        next_state = State(next_vertex_name, scores_of_agents, copy.deepcopy(current_state.get_required_vertexes()),
-                           current_state.get_cost() + step_cost(current_vertex, edge, next_vertex))
-
-        if next_vertex_name in current_state.get_required_vertexes():
-            next_state.set_visited_vertex(next_vertex_name)
-        next_vertex.set_state(next_state)
-        people_in_next_vertex = next_vertex.get_people_num()
-        next_state.set_parent_state(current_state)
-        new_next_vertex = Vertex(people_in_next_vertex, next_state, next_vertex.get_edges(),
-                                 current_vertex, edge.get_edge_name(), current_vertex.get_depth(),
-                                 EnvironmentUtils.g(current_vertex, env_config) + step_cost(current_vertex, edge,
-                                                                                            next_vertex))
-
-        return new_next_vertex
+        return next_vertex
 
     @staticmethod
     def g(node: Vertex, env_conf: EnvironmentConfiguration) -> int:
@@ -119,19 +90,10 @@ class EnvironmentUtils:
         return cost
 
     @staticmethod
-    def get_goal_state(env_config: EnvironmentConfiguration) -> State:
-        temp_dict = EnvironmentUtils.get_required_vertexes(env_config)
-        goal_dict = {}
-        for k, v in temp_dict.items():
-            goal_dict[k] = True
-        goal_state = State("", (-1, -1), goal_dict)
-        return goal_state
-
-    @staticmethod
     def __print_vertex(vertex: Vertex):
         print(
             EnvironmentUtils._VERTEX_PREFIX + vertex.get_vertex_name() + EnvironmentUtils._SPACE_SEPARATOR
-            + EnvironmentUtils._PERSONS_NUM_PREFIX + str(vertex.get_people_num()))
+            + EnvironmentUtils._PERSONS_NUM_PREFIX + str(vertex.get_evacuees_probability()))
 
     @staticmethod
     def __print_edge(edge: Edge):

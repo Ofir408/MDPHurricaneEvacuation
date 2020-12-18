@@ -1,18 +1,16 @@
 from typing import List
 
-from data_structures.State import State
-
 
 class Vertex:
-    def __init__(self, people_num: int, state: State, edges: List[str], parent_vertex: 'Vertex' = None,
-                 action: str = None, depth: int = 0, cost: int = 0):
-        self.__state = state
-        self.__people_num = people_num
+    def __init__(self, vertex_name: str, evacuees_probability: int, edges: List[str] = [],
+                 parent_vertex: 'Vertex' = None,
+                 action: str = None, depth: int = 0):
+        self.__vertex_name = vertex_name
+        self.__evacuees_probability = evacuees_probability
         self.__edges = edges
         self.__parent_vertex = parent_vertex
         self.__action = action
         self.__depth = depth
-        self.__cost = cost
 
     def add_edge_name(self, edge_name: str):
         self.__edges.append(edge_name)
@@ -26,20 +24,11 @@ class Vertex:
     def set_depth(self, depth):
         self.__depth = depth
 
-    def set_cost(self, cost):
-        self.__cost = cost
-
-    def set_state(self, state):
-        self.__state = state
-
-    def get_state(self):
-        return self.__state
-
     def get_vertex_name(self):
-        return self.__state.get_current_vertex_name()
+        return self.__vertex_name
 
-    def get_people_num(self):
-        return self.__people_num
+    def get_evacuees_probability(self):
+        return self.__evacuees_probability
 
     def get_edges(self) -> List[str]:
         return self.__edges
@@ -52,6 +41,3 @@ class Vertex:
 
     def get_depth(self):
         return self.__depth
-
-    def get_cost(self):
-        return self.__cost

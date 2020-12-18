@@ -2,7 +2,6 @@ from typing import Optional, Tuple
 
 from configuration_reader.EnvironmentConfiguration import EnvironmentConfiguration
 from data_structures.Edge import Edge
-from data_structures.State import State
 from data_structures.Vertex import Vertex
 
 
@@ -19,12 +18,12 @@ class ConfigurationReader:
         vertexes_dict = {}
         edges_dict = {}
         vertices_num = -1
-        deadline = -1  # default values.
+        persistence = -1  # default values.
         for current_line in lines:
             if current_line.startswith("#N"):
                 vertices_num = int(current_line.split(ConfigurationReader.SPACE_SEPARATOR)[1])
-            elif current_line.startswith("#D"):
-                deadline = float(current_line.split(ConfigurationReader.SPACE_SEPARATOR)[1])
+            elif current_line.startswith("#Ppersistence"):
+                persistence = float(current_line.split(ConfigurationReader.SPACE_SEPARATOR)[1])
             elif current_line.startswith("#V"):
                 name, vertex = ConfigurationReader.create_vertex(current_line)
                 vertexes_dict[name] = vertex
@@ -35,7 +34,7 @@ class ConfigurationReader:
                 first_vertex, second_vertex = edge.get_vertex_names()
                 vertexes_dict[first_vertex].add_edge_name(edge.get_edge_name())
                 vertexes_dict[second_vertex].add_edge_name(edge.get_edge_name())
-        return EnvironmentConfiguration(vertices_num, deadline, vertexes_dict, edges_dict)
+        return EnvironmentConfiguration(vertices_num, persistence, vertexes_dict, edges_dict)
 
     @staticmethod
     # Example input: #E1 1 2 W1
@@ -55,11 +54,11 @@ class ConfigurationReader:
     def create_vertex(input_line: str) -> Optional[Tuple[str, Vertex]]:
         parts = input_line.split(ConfigurationReader.SPACE_SEPARATOR)
         parts_length = len(parts)
-        peoples_in_vertex = 0
+        evacuees_probability = 0
         if parts_length > 2 or parts_length == 0:
             print(f'input line: {input_line} is invalid. Correct format: #V4 P2 or #V4')
             return None
         if parts_length == 2:
-            peoples_in_vertex = int(parts[1].replace("P", ""))
+            evacuees_probability = float(parts[1].replace("F", ""))
         name = parts[0].replace("#V", "")
-        return name, Vertex(peoples_in_vertex, State(name, (0, 0)), [])
+        return name, Vertex(name, evacuees_probability)
