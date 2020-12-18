@@ -1,6 +1,9 @@
+import copy
 from typing import List, Callable, Tuple
 
 from bl.agents import IAgent
+from bl.agents.adversarial_agents.GameState import GameState
+from bl.agents.adversarial_agents.MiniMaxAgent import MiniMaxAgent
 from configuration_reader import EnvironmentConfiguration
 from data_structures.State import State
 from utils.EnvironmentUtils import EnvironmentUtils
@@ -24,26 +27,37 @@ class Simulator:
         scores = [0] * len(agents)
         costs = [0] * len(agents)
         actions = [[] for _ in range(len(agents))]
+        vertexes_paths = [[] for _ in range(len(agents))]
         traveled_states = []
         should_terminate = False
 
+        agent_num = 0
         while not should_terminate:
-            for agent_num, agent in enumerate(agents):
-                percepts = self.__get_percepts(agent_num, states, env_conf)
+            agent = agents[agent_num]
+            percepts = self.__get_percepts(agent_num, states, env_conf)
+            if states[agent_num].get_distance() == 0:
                 action = agent.get_action(percepts)
-                new_state = update_func(agent, action, actions, agent_num, states, (costs, agent_num), env_conf)
-                states[agent_num] = new_state if new_state is not None else states[agent_num]
-                scores[agent_num] += performance_func(new_state, traveled_states, env_conf)
-                should_terminate = termination_func(states, agents)
-                self.__display_word_state(agent_num, states, len(agents), actions, costs, scores, env_conf)
+                new_state = update_func(agent, action, actions, vertexes_paths, agent_num, states, (costs, agent_num),
+                                        env_conf)
+                states[agent_num] = copy.deepcopy(new_state)
+                scores[agent_num] += performance_func(new_state, action, traveled_states, env_conf)
+                should_terminate = termination_func([states[0].get_parent_state(), states[1].get_parent_state()],
+                                                    agents, action)
+            else:
+                states[agent_num].decrease_distance_by_one()
+            self.__display_word_state(agent_num, len(agents), actions, vertexes_paths, costs, scores, env_conf)
+            agent_num = 1 if agent_num == 0 else 0
         return scores
 
     def __get_percepts(self, agent_num, states, env_conf):
-        state = states[agent_num]
-        state.set_scores_of_agents((0, 0))  # reset the score
-        return state, env_conf
+        for state in states:
+            state.set_scores_of_agents((0, 0))  # reset the score
+        states[agent_num].set_distance(0)
+        game_state = GameState(agent_num + 1 == 1, states[0], states[1])
+        return game_state, env_conf
 
-    def update_func(self, agent: IAgent, action: str, actions, agent_num: int, states: List[State], costs_info: Tuple[List, int],
+    def update_func(self, agent: IAgent, action: str, actions, vertexes_paths, agent_num: int, states: List[State],
+                    costs_info: Tuple[List, int],
                     env_conf: EnvironmentConfiguration):
         current_state = states[agent_num]
         # check if the deadline passed
@@ -52,6 +66,7 @@ class Simulator:
             return None
 
         actions[agent_num].append(action)
+        vertexes_paths[agent_num].append(current_state.get_current_vertex_name())
         vertex = env_conf.get_vertexes()[current_state.get_current_vertex_name()]
         vertex.set_state(current_state)
         new_state = EnvironmentUtils.get_next_vertex(vertex, action, agent.step_cost, env_conf).get_state()
@@ -62,37 +77,57 @@ class Simulator:
             edge_weight = edges_dict[action].get_weight()
             costs[agent_num] += edge_weight
             new_state.set_cost(current_state.get_cost() + edge_weight)
+            new_state.set_distance(edge_weight - 1)
         for state in states:
             state.set_visited_vertex(current_state.get_current_vertex_name())
+        new_state.set_visited_vertex(current_state.get_current_vertex_name())
+        if current_state.get_current_vertex_name() != new_state.get_current_vertex_name():
+            vertexes_paths[agent_num].append(new_state.get_current_vertex_name())
+
         return new_state
 
-    def performance_func(self, new_state: State, traveled_states, env_config: EnvironmentConfiguration):
-        return StateUtils.get_saved_people_num(new_state, traveled_states, env_config)
+    def performance_func(self, new_state: State, action, traveled_states, env_config: EnvironmentConfiguration):
+        temp = new_state if action is None else new_state.get_parent_state()
+        if temp.get_distance() > 0:
+            return 0
+        if new_state.get_distance() == 0:
+            temp = new_state
+        return StateUtils.get_saved_people_num(temp, traveled_states, env_config)
 
-    def terminate_func(self, states: List[State], agents: List):
+    def terminate_func(self, states: List[State], agents: List, action: str):
         should_terminate = len([agent for agent in agents if agent.was_terminated()]) == len(agents)
         if should_terminate:
             return True
         traveled_states = []
+        if None in states:
+            return False
         for state in states:
             traveled_states += StateUtils.get_state_traveled_vertexes(state)
         traveled_states = set().union(traveled_states)
         return len(traveled_states) == len(states[0].get_required_vertexes())
 
-    def __display_word_state(self, current_agent_num, states, agents_num, actions, costs, scores, env_config):
-        if current_agent_num == agents_num - 1:
-            # calc actions without TRAVELLING steps
-            temp = []
-            for current_agent_action in actions:
-                temp.append(
-                    [action for action in current_agent_action if action != 'TRAVELLING' and action is not None])
-
+    def __display_word_state(self, current_agent_num, agents_num, actions, vertices_paths, costs, scores,
+                             env_config):
+        # calc actions without TRAVELLING steps
+        temp = []
+        for current_agent_action in actions:
+            temp.append(
+                [action for action in current_agent_action if action != 'TRAVELLING' and
+                 action != 'DONE' and action is not None])
+        last_element = None
+        temp_lists = []
+        for y in vertices_paths:
+            temp_vertices = []
+            for x in y:
+                if x != last_element:
+                    last_element = x
+                    temp_vertices.append(x)
+            temp_lists.append(copy.deepcopy(temp_vertices))
             print("----------------------------------")
             print("The step is over. Display the state of the world:")
             EnvironmentUtils.print_environment(env_config)
-            print("actions: ", actions)
             print("concise actions: ", temp)
+            print("vertices paths: ", temp_lists)
             print("costs: ", costs)
-            print("states: ", [state.__str__() for state in states])
             print("scores: ", scores)
             print("----------------------------------")

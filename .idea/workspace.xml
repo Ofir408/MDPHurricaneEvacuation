@@ -1,117 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="df0338cc-b0e3-45da-aa22-62190f9ec9bb" name="Default Changelist" comment="" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <list default="true" id="df0338cc-b0e3-45da-aa22-62190f9ec9bb" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/initial_configurations/improved_short_example.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bl/Simulator.py" beforeDir="false" afterPath="$PROJECT_DIR$/bl/Simulator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bl/agents/IAgent.py" beforeDir="false" afterPath="$PROJECT_DIR$/bl/agents/IAgent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bl/agents/adversarial_agents/GameState.py" beforeDir="false" afterPath="$PROJECT_DIR$/bl/agents/adversarial_agents/GameState.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bl/agents/adversarial_agents/MiniMaxAgent.py" beforeDir="false" afterPath="$PROJECT_DIR$/bl/agents/adversarial_agents/MiniMaxAgent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_structures/State.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_structures/State.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/initial_configurations/example2.ascii" beforeDir="false" afterPath="$PROJECT_DIR$/initial_configurations/example2.ascii" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/initial_configurations/full_cooperative_example.ascii" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/initial_configurations/my_graph.txt" beforeDir="false" afterPath="$PROJECT_DIR$/initial_configurations/my_graph.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/initial_configurations/short_example.ascii" beforeDir="false" afterPath="$PROJECT_DIR$/initial_configurations/short_example.txt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="-360708260">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.open.time.0" value="1" />
-          <entry key="project.opened" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="ascii" value="1" />
-          <entry key="py" value="6" />
-          <entry key="txt" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="PLAIN_TEXT" value="2" />
-          <entry key="Python" value="6" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="ascii" value="26" />
-          <entry key="dummy" value="13" />
-          <entry key="py" value="3184" />
-          <entry key="txt" value="20" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="PLAIN_TEXT" value="59" />
-          <entry key="Python" value="3184" />
-        </counts>
-      </usages-collector>
-    </session>
-  </component>
-  <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/initial_configurations/example.ascii">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="12" column="28" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/configuration_reader/ConfigurationReader.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="44" column="33" lean-forward="true" selection-start-line="44" selection-start-column="33" selection-end-line="44" selection-end-column="33" />
-              <folding>
-                <element signature="e#0#27#0" expanded="true" />
-                <marker date="1604160581627" expanded="true" signature="220:221" ph="..." />
-                <marker date="1604160581627" expanded="true" signature="220:280" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data_structures/Edge.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-              <folding>
-                <marker date="1604157905237" expanded="true" signature="11:12" ph="..." />
-                <marker date="1604157905237" expanded="true" signature="11:17" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data_structures/Vertex.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="9" lean-forward="true" selection-start-column="9" selection-end-column="9" />
-              <folding>
-                <marker date="1604160581616" expanded="true" signature="13:18" ph="..." />
-                <marker date="1604160581616" expanded="true" signature="411:456" ph="..." />
-                <marker date="1604160581616" expanded="true" signature="741:746" ph="..." />
-                <marker date="1604160581616" expanded="true" signature="771:780" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/configuration_reader/EnvironmentConfiguration.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="6" column="23" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
-              <folding>
-                <marker date="1604156499389" expanded="true" signature="31:32" ph="..." />
-                <marker date="1604156499389" expanded="true" signature="31:37" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -120,74 +45,31 @@
       </list>
     </option>
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/a.py" />
-        <option value="$PROJECT_DIR$/configuration_reader/FileReader.py" />
-        <option value="$PROJECT_DIR$/initial_configurations/t.txt" />
-        <option value="$PROJECT_DIR$/initial_configurations/example.ascii" />
-        <option value="$PROJECT_DIR$/configuration_reader/EnvironmentConfiguration.py" />
-        <option value="$PROJECT_DIR$/common/Vertex.py" />
-        <option value="$PROJECT_DIR$/common/Edge.py" />
-        <option value="$PROJECT_DIR$/data_structures/Edge.py" />
-        <option value="$PROJECT_DIR$/data_structures/Vertex.py" />
-        <option value="$PROJECT_DIR$/configuration_reader/ConfigurationReader.py" />
-      </list>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="d09b10b2c972c595637d4a90e73a97bebd831200" />
+      </map>
     </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="960" />
-    <option name="width" value="960" />
-    <option name="height" value="1040" />
+  <component name="ProjectId" id="1khr5nwDyOQ4DRlkXV3QjWrGdDP" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="AI_Hurricane_Evacuation" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AI_Hurricane_Evacuation" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="AI_Hurricane_Evacuation" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AI_Hurricane_Evacuation" type="462c0819:PsiDirectoryNode" />
-              <item name="configuration_reader" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="AI_Hurricane_Evacuation" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AI_Hurricane_Evacuation" type="462c0819:PsiDirectoryNode" />
-              <item name="data_structures" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="AI_Hurricane_Evacuation" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AI_Hurricane_Evacuation" type="462c0819:PsiDirectoryNode" />
-              <item name="initial_configurations" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/initial_configurations" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Ofir\PycharmProjects\ofir\AI_Hurricane_Evacuation\initial_configurations" />
+      <recent name="C:\Users\Ofir\PycharmProjects\ofir\AI_Hurricane_Evacuation\bl\agents" />
+    </key>
   </component>
-  <component name="RunManager" selected="Python.ConfigurationReader">
+  <component name="RunManager" selected="Python.Main">
     <configuration name="ConfigurationReader" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="AI_Hurricane_Evacuation" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -202,6 +84,27 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/configuration_reader/ConfigurationReader.py" />
       <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="AI_Hurricane_Evacuation" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Main.py" />
+      <option name="PARAMETERS" value="initial_configurations/example2.ascii" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -231,16 +134,20 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.a" />
+      <item itemvalue="Python.Main" />
       <item itemvalue="Python.ConfigurationReader" />
+      <item itemvalue="Python.a" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.a" />
         <item itemvalue="Python.ConfigurationReader" />
+        <item itemvalue="Python.Main" />
         <item itemvalue="Python.a" />
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -252,98 +159,188 @@
       <option name="presentableId" value="Default" />
       <updated>1604148203014</updated>
     </task>
+    <task id="LOCAL‎00001" summary="Simulator works according steps (travelling step is included)">
+      <created>1607081159887</created>
+      <option name="number" value="LOCAL‎00001" />
+      <option name="presentableId" value="LOCAL‎00001" />
+      <updated>1607081159887</updated>
+    </task>
+    <task id="LOCAL‎00002" summary="Added MiniMax &amp; Cooperative Agents">
+      <created>1607370989344</created>
+      <option name="number" value="LOCAL‎00002" />
+      <option name="presentableId" value="LOCAL‎00002" />
+      <updated>1607370989344</updated>
+    </task>
+    <task id="LOCAL‎00003" summary="Fixed bugs">
+      <created>1607615075853</created>
+      <option name="number" value="LOCAL‎00003" />
+      <option name="presentableId" value="LOCAL‎00003" />
+      <updated>1607615075853</updated>
+    </task>
+    <task id="LOCAL‎00004" summary="Fixed bugs">
+      <created>1607644689237</created>
+      <option name="number" value="LOCAL‎00004" />
+      <option name="presentableId" value="LOCAL‎00004" />
+      <updated>1607644689237</updated>
+    </task>
+    <task id="LOCAL‎00005" summary="Without distance calculation (distance to move on an edge)">
+      <created>1607685770726</created>
+      <option name="number" value="LOCAL‎00005" />
+      <option name="presentableId" value="LOCAL‎00005" />
+      <updated>1607685770726</updated>
+    </task>
+    <task id="LOCAL‎00006" summary="Breaking ties cooperatively for semi-cooperative agent">
+      <created>1607696786394</created>
+      <option name="number" value="LOCAL‎00006" />
+      <option name="presentableId" value="LOCAL‎00006" />
+      <updated>1607696786394</updated>
+    </task>
+    <task id="LOCAL‎00007" summary="temp">
+      <created>1607706098893</created>
+      <option name="number" value="LOCAL‎00007" />
+      <option name="presentableId" value="LOCAL‎00007" />
+      <updated>1607706098893</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
-  <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
-    <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12533051" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Python Console" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.22433035" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-    </layout>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/a.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/initial_configurations/t.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_structures/Vertex.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="9" lean-forward="true" selection-start-column="9" selection-end-column="9" />
-          <folding>
-            <marker date="1604160581616" expanded="true" signature="13:18" ph="..." />
-            <marker date="1604160581616" expanded="true" signature="411:456" ph="..." />
-            <marker date="1604160581616" expanded="true" signature="741:746" ph="..." />
-            <marker date="1604160581616" expanded="true" signature="771:780" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_structures/Edge.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-          <folding>
-            <marker date="1604157905237" expanded="true" signature="11:12" ph="..." />
-            <marker date="1604157905237" expanded="true" signature="11:17" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/configuration_reader/EnvironmentConfiguration.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" column="23" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
-          <folding>
-            <marker date="1604156499389" expanded="true" signature="31:32" ph="..." />
-            <marker date="1604156499389" expanded="true" signature="31:37" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/initial_configurations/example.ascii">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="12" column="28" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/configuration_reader/ConfigurationReader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="44" column="33" lean-forward="true" selection-start-line="44" selection-start-column="33" selection-end-line="44" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-            <marker date="1604160581627" expanded="true" signature="220:221" ph="..." />
-            <marker date="1604160581627" expanded="true" signature="220:280" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Simulator works according steps (travelling step is included)" />
+    <MESSAGE value="Added MiniMax &amp; Cooperative Agents" />
+    <MESSAGE value="Fixed bugs" />
+    <MESSAGE value="Without distance calculation (distance to move on an edge)" />
+    <MESSAGE value="Breaking ties cooperatively for semi-cooperative agent" />
+    <MESSAGE value="temp" />
+    <option name="LAST_COMMIT_MESSAGE" value="temp" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="602" y="134" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607777457332">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="602" y="134" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607777457332" />
+    <state x="624" y="207" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1607104597118">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="624" y="207" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607104597118" />
+    <state x="532" y="13" key="CommitChangelistDialog2" timestamp="1607706098549">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="532" y="13" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1607706098549" />
+    <state width="1428" height="566" key="DebuggerActiveHint" timestamp="1607771204119">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1428" height="566" key="DebuggerActiveHint/0.0.1920.1040@0.0.1920.1040" timestamp="1607771204119" />
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1607782594794">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607782594794" />
+    <state width="1892" height="248" key="GridCell.Tab.0.bottom" timestamp="1607782473527">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1572" height="234" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1606308091913" />
+    <state width="1892" height="248" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607782473527" />
+    <state width="1892" height="248" key="GridCell.Tab.0.center" timestamp="1607782473526">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1572" height="234" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1606308091912" />
+    <state width="1892" height="248" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607782473526" />
+    <state width="1892" height="248" key="GridCell.Tab.0.left" timestamp="1607782473526">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1572" height="234" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1606308091912" />
+    <state width="1892" height="248" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607782473526" />
+    <state width="1892" height="248" key="GridCell.Tab.0.right" timestamp="1607782473527">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1572" height="234" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1606308091912" />
+    <state width="1892" height="248" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607782473527" />
+    <state width="1892" height="273" key="GridCell.Tab.1.bottom" timestamp="1607771598567">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1892" height="273" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607771598567" />
+    <state width="1892" height="273" key="GridCell.Tab.1.center" timestamp="1607771598567">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1892" height="273" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607771598567" />
+    <state width="1892" height="273" key="GridCell.Tab.1.left" timestamp="1607771598567">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1892" height="273" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607771598567" />
+    <state width="1892" height="273" key="GridCell.Tab.1.right" timestamp="1607771598567">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1892" height="273" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607771598567" />
+    <state x="184" y="85" key="MergeDialog" timestamp="1607708565946">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="184" y="85" key="MergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607708565946" />
+    <state x="670" y="153" key="RollbackChangesDialog" timestamp="1607718505964">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="670" y="153" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607718505964" />
+    <state x="351" y="63" key="SettingsEditor" timestamp="1607073277157">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="351" y="63" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1607073277157" />
+    <state x="452" y="189" key="Vcs.Push.Dialog.v2" timestamp="1607706100755">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="452" y="189" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1607706100755" />
+    <state x="605" y="188" width="710" height="746" key="find.popup" timestamp="1607770077310">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="605" y="188" width="710" height="746" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607770077310" />
+    <state x="641" y="164" key="git4idea.branch.GitSmartOperationDialog" timestamp="1607710233895">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="641" y="164" key="git4idea.branch.GitSmartOperationDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607710233895" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <condition expression="edge_name==&quot;2&quot;" language="Python" />
+          <url>file://$PROJECT_DIR$/bl/agents/part2/ITreeSearchAgent.py</url>
+          <line>34</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/bl/Simulator.py</url>
+          <line>36</line>
+          <option name="timeStamp" value="94" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/bl/agents/adversarial_agents/MiniMaxAgent.py</url>
+          <line>74</line>
+          <option name="timeStamp" value="109" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/bl/agents/adversarial_agents/MiniMaxAgent.py</url>
+          <line>48</line>
+          <option name="timeStamp" value="111" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
