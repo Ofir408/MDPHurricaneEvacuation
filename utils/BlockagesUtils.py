@@ -50,7 +50,7 @@ class BlockagesUtils:
         false_evacuees = []
         for evacuee_name in names_of_evacuees:
             false_evacuees.append(Evacuees(False, evacuee_name))
-        blockages = Blockages(blockage_name, 0, false_evacuees, [], False, 1 - BlockagesUtils.LEAKAGE_PROBABILITY)
+        blockages = Blockages(blockage_name, 0, false_evacuees, [], False, BlockagesUtils.LEAKAGE_PROBABILITY)
         previous_blockage_prob.append(copy.deepcopy(blockages))
 
         for evacuee_name in names_of_evacuees:

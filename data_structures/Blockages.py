@@ -4,7 +4,6 @@ from data_structures.Evacuees import Evacuees
 
 
 class Blockages:
-    # TODO: is_blocked should be without a default value?
     def __init__(self, name: str, time: int, evacuees_dependencies: List[Evacuees],
                  blockages_dependencies: List['Blockages'], is_blocked_prob_calc,
                  probability: float = None):
@@ -48,3 +47,22 @@ class Blockages:
         same_evacuees_dependencies = self.__evacuees_dependencies == other.__evacuees_dependencies
         same_blockages_dependencies = self.__blockages_dependencies == other.__blockages_dependencies
         return same_name and same_time and same_evacuees_dependencies and same_blockages_dependencies
+
+    # example format: P(Blockage 1 | not Evacuees 1, not Evacuees 2) = 0.001 or P(Blockage 1,1 | Blockage 1,0) = 0.001
+    def __str__(self):
+        if len(self.__evacuees_dependencies) > 0:
+            s = "P(Blockage {0} | {1}Evacuees {2}, {3}Evacuees {4}) = {5}".format(
+                str(self.__time) + "," + self.__name,
+                "" if self.__evacuees_dependencies[0].get_is_evacuees() else "NOT ",
+                self.__evacuees_dependencies[0].get_vertex_name(),
+                "" if self.__evacuees_dependencies[1].get_is_evacuees() else "NOT ",
+                self.__evacuees_dependencies[1].get_vertex_name(),
+                self.__probability
+            )
+        else:
+            s = "P(Blockage {0} | {1}Blockage {2}) = {3}".format(
+                str(self.__time) + "," + self.__name,
+                "" if self.__blockages_dependencies[-1].__is_blocked_prob_calc else "NOT ",
+                str(self.__time - 1) + "," + self.__blockages_dependencies[-1].get_name(), self.__probability
+            )
+        return s
