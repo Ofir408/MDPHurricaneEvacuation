@@ -15,31 +15,32 @@ class BlockagesUtils:
         # leakage probability of 0.001, when all the causes are inactive
         if BlockagesUtils.__is_spontaneous_blockage(blockages.get_blockages_dependencies()):
             return BlockagesUtils.SPONTANEOUS_PROBABILITY
-
-        # dependency blockages is blocked
-        persistence = env_config.get_persistence()
-        return persistence
+        return env_config.get_persistence()
 
     @staticmethod
     def noisy_or_probability_calc(blockages: Blockages, env_config: EnvironmentConfiguration) -> float:
-        # TODO: normal case. for example: P(Blockage 1 | Evacuees 1, Evacuees 2)
-        probability = 1
+        probability = 1.0
         evacuees = blockages.get_evacuees_dependencies()
         names_of_evacuees = [evacuee.get_vertex_name() for evacuee in evacuees]
         previous_blockage_prob = []
-        BlockagesUtils.__add_noisy_or_base_cases(previous_blockage_prob, evacuees, env_config)
+        BlockagesUtils.__add_noisy_or_base_cases(blockages.get_name(), previous_blockage_prob, evacuees, env_config)
         truth_evacuees = [evacuee for evacuee in evacuees if evacuee.get_is_evacuees()]
 
+        if blockages in previous_blockage_prob:
+            inx = previous_blockage_prob.index(blockages)
+            return previous_blockage_prob[inx].get_probability()
+
         for truth_evacuee in truth_evacuees:
-            current_blockages = BlockagesUtils.__build_blockages_for_noisy_or(names_of_evacuees, truth_evacuee, 0)
+            current_blockages = BlockagesUtils.__build_blockages_for_noisy_or(blockages.get_name(), names_of_evacuees,
+                                                                              truth_evacuee.get_vertex_name(), 0)
             current_probability = BlockagesUtils.__get_probability_from_previous_blockage(current_blockages,
                                                                                           previous_blockage_prob)
-            probability = probability * current_probability
+            probability = probability * (1 - current_probability)
         truth_probability = 1 - probability
         return truth_probability
 
     @staticmethod
-    def __add_noisy_or_base_cases(previous_blockage_prob: List[Blockages], evacuees: List[Evacuees],
+    def __add_noisy_or_base_cases(blockage_name, previous_blockage_prob: List[Blockages], evacuees: List[Evacuees],
                                   env_config: EnvironmentConfiguration):
         names_of_evacuees = []
         for evacuee in evacuees:
@@ -49,11 +50,11 @@ class BlockagesUtils:
         false_evacuees = []
         for evacuee_name in names_of_evacuees:
             false_evacuees.append(Evacuees(False, evacuee_name))
-        blockages = Blockages("", 0, false_evacuees, [], False, 1 - BlockagesUtils.LEAKAGE_PROBABILITY)
+        blockages = Blockages(blockage_name, 0, false_evacuees, [], False, 1 - BlockagesUtils.LEAKAGE_PROBABILITY)
         previous_blockage_prob.append(copy.deepcopy(blockages))
 
         for evacuee_name in names_of_evacuees:
-            blockages = BlockagesUtils.__build_blockages_for_noisy_or(names_of_evacuees, evacuee_name, 0)
+            blockages = BlockagesUtils.__build_blockages_for_noisy_or(blockage_name, names_of_evacuees, evacuee_name, 0)
             # calculate the probability
             edge_name = blockages.get_name()
             edge_weight = env_config.get_edges()[edge_name].get_weight()
@@ -91,7 +92,7 @@ class BlockagesUtils:
         return 0.6 * 1 / edge_weight
 
     @staticmethod
-    def __build_blockages_for_noisy_or(names_of_evacuees: List[str], truth_evacuee_name: str,
+    def __build_blockages_for_noisy_or(blockage_name: str, names_of_evacuees: List[str], truth_evacuee_name: str,
                                        time: int) -> Blockages:
         evacuees = []
         temp = copy.deepcopy(names_of_evacuees)
@@ -100,5 +101,5 @@ class BlockagesUtils:
         temp.remove(truth_evacuee_name)
         for evacuee_name in temp:
             evacuees.append(Evacuees(False, evacuee_name))
-        blockage = Blockages("", time, evacuees, [], False)
+        blockage = Blockages(blockage_name, time, evacuees, [], False)
         return blockage

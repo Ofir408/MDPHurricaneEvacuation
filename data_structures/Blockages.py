@@ -43,7 +43,8 @@ class Blockages:
         self.__is_blocked_prob_calc = is_blocked_prob_calc
 
     def __eq__(self, other: 'Blockages'):
-        return self.__name == other.__name and self.__time == other.__time \
-               and self.__is_blocked_prob_calc == other.__is_blocked_prob_calc \
-               and self.__evacuees_dependencies == other.__evacuees_dependencies \
-               and self.__blockages_dependencies == other.__blockages_dependencies
+        same_name = self.__name == other.__name
+        same_time = self.__time == other.__time
+        same_evacuees_dependencies = self.__evacuees_dependencies == other.__evacuees_dependencies
+        same_blockages_dependencies = self.__blockages_dependencies == other.__blockages_dependencies
+        return same_name and same_time and same_evacuees_dependencies and same_blockages_dependencies
