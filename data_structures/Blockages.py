@@ -57,12 +57,12 @@ class Blockages:
                 self.__evacuees_dependencies[0].get_vertex_name(),
                 "" if self.__evacuees_dependencies[1].get_is_evacuees() else "NOT ",
                 self.__evacuees_dependencies[1].get_vertex_name(),
-                self.__probability
+                round(self.__probability, 3)
             )
         else:
             s = "P(Blockage {0} | {1}Blockage {2}) = {3}".format(
                 str(self.__time) + "," + self.__name,
                 "" if self.__blockages_dependencies[-1].__is_blocked_prob_calc else "NOT ",
-                str(self.__time - 1) + "," + self.__blockages_dependencies[-1].get_name(), self.__probability
+                str(self.__time - 1) + "," + self.__blockages_dependencies[-1].get_name(), round(self.__probability, 3)
             )
         return s

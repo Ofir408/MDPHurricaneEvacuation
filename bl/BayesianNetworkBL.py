@@ -35,7 +35,7 @@ class BayesianNetworkBL:
 
     def __get_blockages_dependencies(self, blockages_name: str):
         result = []
-        print ("EDGE {0}, TIME= {1}:".format(blockages_name, self.__time))
+        print("EDGE {0}, TIME= {1}:".format(blockages_name, self.__time))
         if self.__time == 0:
             # noisy or
             first_vertex_name, second_vertex_name = self.__env_config.get_edges()[blockages_name].get_vertex_names()
