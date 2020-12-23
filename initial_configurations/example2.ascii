@@ -2,8 +2,8 @@
 
 #V1 F0.0             ; Vertex 1, no evacuees for sure
 #V2 F0.4             ; Vertex 2, probability of evacuees 0.4
-#V3 F0.0             ; Vertex 2, probability of evacuees 0.4
-#V4 F0.0             ; Vertex 2, probability of evacuees 0.4
+#V3 F0.0             ; Vertex 2, probability of evacuees 0.0
+#V4 F0.0             ; Vertex 2, probability of evacuees 0.0
 
 #E1 1 2 W1           ; Edge1 between vertices 1 and 2, weight 1
 #E2 2 3 W3           ; Edge2 between vertices 2 and 3, weight 3
