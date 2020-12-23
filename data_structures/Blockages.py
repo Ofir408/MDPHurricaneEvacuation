@@ -61,8 +61,8 @@ class Blockages:
             )
         else:
             s = "P(Blockage {0} | {1}Blockage {2}) = {3}".format(
-                str(self.__time) + "," + self.__name,
+                self.__name + "," + str(self.__time),
                 "" if self.__blockages_dependencies[-1].__is_blocked_prob_calc else "NOT ",
-                str(self.__time - 1) + "," + self.__blockages_dependencies[-1].get_name(), round(self.__probability, 3)
+                self.__blockages_dependencies[-1].get_name() + "," + str(self.__time - 1), round(self.__probability, 3)
             )
         return s
