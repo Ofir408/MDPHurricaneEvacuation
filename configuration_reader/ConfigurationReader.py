@@ -32,6 +32,8 @@ class ConfigurationReader:
                 edges_dict[name] = edge
                 # add the edge name to relevant vertexes
                 first_vertex, second_vertex = edge.get_vertex_names()
+                first_vertex = "#V" + first_vertex
+                second_vertex = "#V" + second_vertex
                 vertexes_dict[first_vertex].add_edge_name(edge.get_edge_name())
                 vertexes_dict[second_vertex].add_edge_name(edge.get_edge_name())
         return EnvironmentConfiguration(vertices_num, persistence, vertexes_dict, edges_dict)
@@ -60,5 +62,5 @@ class ConfigurationReader:
             return None
         if parts_length == 2:
             evacuees_probability = float(parts[1].replace("F", ""))
-        name = parts[0].replace("#V", "")
+        name = parts[0]
         return name, Vertex(name, evacuees_probability)

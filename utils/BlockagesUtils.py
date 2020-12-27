@@ -21,10 +21,10 @@ class BlockagesUtils:
     def noisy_or_probability_calc(blockages: Blockages, env_config: EnvironmentConfiguration) -> float:
         probability = 1.0
         evacuees = blockages.get_evacuees_dependencies()
-        names_of_evacuees = [evacuee.get_vertex_name() for evacuee in evacuees]
+        names_of_evacuees = [evacuee.get_name() for evacuee in evacuees]
         previous_blockage_prob = []
         BlockagesUtils.__add_noisy_or_base_cases(blockages.get_name(), previous_blockage_prob, evacuees, env_config)
-        truth_evacuees = [evacuee for evacuee in evacuees if evacuee.get_is_evacuees()]
+        truth_evacuees = [evacuee for evacuee in evacuees if evacuee.is_true()]
 
         if blockages in previous_blockage_prob:
             inx = previous_blockage_prob.index(blockages)
@@ -32,7 +32,7 @@ class BlockagesUtils:
 
         for truth_evacuee in truth_evacuees:
             current_blockages = BlockagesUtils.__build_blockages_for_noisy_or(blockages.get_name(), names_of_evacuees,
-                                                                              truth_evacuee.get_vertex_name(), 0)
+                                                                              truth_evacuee.get_name(), 0)
             current_probability = BlockagesUtils.__get_probability_from_previous_blockage(current_blockages,
                                                                                           previous_blockage_prob)
             probability = probability * (1 - current_probability)
@@ -44,7 +44,7 @@ class BlockagesUtils:
                                   env_config: EnvironmentConfiguration):
         names_of_evacuees = []
         for evacuee in evacuees:
-            names_of_evacuees.append(evacuee.get_vertex_name())
+            names_of_evacuees.append(evacuee.get_name())
 
         # add leakage case
         false_evacuees = []
@@ -56,11 +56,11 @@ class BlockagesUtils:
         for evacuee_name in names_of_evacuees:
             blockages = BlockagesUtils.__build_blockages_for_noisy_or(blockage_name, names_of_evacuees, evacuee_name, 0)
             # calculate the probability
-            edge_name = blockages.get_name()
+            edge_name = blockages.get_name()[0: blockages.get_name().index(",")]
             edge_weight = env_config.get_edges()[edge_name].get_weight()
             probability = BlockagesUtils.__pi(edge_weight)
             blockages.set_probability(probability)
-            blockages.set_is_blocked_prob_calc(False)
+            blockages.set_value(False)
             previous_blockage_prob.append(copy.deepcopy(blockages))
 
     @staticmethod
@@ -74,16 +74,16 @@ class BlockagesUtils:
     @staticmethod
     def __is_spontaneous_blockage(blockages: List[Blockages]):
         blockage = blockages[-1]
-        return not blockage.get_is_blocked_prob_calc()
+        return not blockage.is_true()
 
     @staticmethod
     def __is_incident(evacuees: List[Evacuees]):
-        return len([True for x in evacuees if x.get_is_evacuees()]) == 1
+        return len([True for x in evacuees if x.is_true()]) == 1
 
     @staticmethod
     def __is_leakage(evacuees: List[Evacuees]):
         for evacuee in evacuees:
-            if evacuee.get_is_evacuees():
+            if evacuee.is_true():
                 return False
         return True
 

@@ -66,7 +66,7 @@ class EnvironmentUtils:
     @staticmethod
     def __print_vertex(vertex: Vertex):
         print(
-            EnvironmentUtils._VERTEX_PREFIX + vertex.get_vertex_name() + EnvironmentUtils._SPACE_SEPARATOR
+            vertex.get_vertex_name() + EnvironmentUtils._SPACE_SEPARATOR
             + EnvironmentUtils._PERSONS_NUM_PREFIX + str(vertex.get_evacuees_probability()))
 
     @staticmethod

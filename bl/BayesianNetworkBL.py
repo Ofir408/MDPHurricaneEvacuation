@@ -1,11 +1,11 @@
 import copy
+from typing import List
 
 from configuration_reader.EnvironmentConfiguration import EnvironmentConfiguration
 from data_structures.Blockages import Blockages
 from data_structures.Evacuees import Evacuees
+from data_structures.Var import Var
 from utils.BlockagesUtils import BlockagesUtils
-
-import itertools
 
 
 class BayesianNetworkBL:
@@ -21,6 +21,67 @@ class BayesianNetworkBL:
             self.__build_blockages()
             self.__time += 1
             print("\n------------------- TIME={0} Ended -----------------------\n".format(self.__time - 1))
+
+    def get_from_bn(self, var: Var, evidence_list: List[Var]) -> float:
+        name = var.get_name()
+        is_true = var.is_true()
+        # TODO: calc by the evidence list - find the bug here... & simplify.
+        for evacuee in self.__evacuees:
+            if evacuee.get_name() == name:
+                if evacuee.is_true() == is_true:
+                    return evacuee.get_probability()
+                else:
+                    return 1 - evacuee.get_probability()
+        for blockage in self.get_blockages():
+            if self.__is_same_blockages_dependencies(evidence_list, blockage):
+                if blockage.is_true() == is_true:
+                    return blockage.get_probability()
+                else:
+                    return 1 - blockage.get_probability()
+        return 0.001
+
+    def __is_same_blockages_dependencies(self, evidence_list: List[Var], blockage: Blockages):
+        blockage_dependencies = blockage.get_blockages_dependencies()
+        for current_blockage in blockage_dependencies:
+            current_name = current_blockage.get_name()
+            current_is_true = current_blockage.is_true()
+            temp = Var(current_name).set_value(current_is_true)
+            if temp not in evidence_list:
+                return False
+        return True
+
+    def topological_sorter(self) -> List[Var]:
+        """
+        :return: List of vars (blockages & evacuees) in a topological order.
+        """
+        # V1, V2, V3, V4, E1,0 , E2,0 , E3,0 , E4,0, E1,1 , E2,1 , E3,1 , E4,1
+        time_one = []
+        time_zero = []
+        for blockage_list in self.__blockages:
+            for blockage in blockage_list:
+                if blockage.get_time() == 0 and not self.is_blockage_exist(blockage, time_zero):
+                    time_zero.append(copy.deepcopy(blockage))
+                if blockage.get_time() == 1 and not self.is_blockage_exist(blockage, time_one):
+                    time_one.append(copy.deepcopy(blockage))
+        # sorted_topological = time_one + time_zero + self.__evacuees
+        sorted_topological = self.__evacuees + time_zero + time_one
+        return sorted_topological
+
+    def is_blockage_exist(self, blockages: Blockages, blockages_list: List[Blockages]):
+        name = blockages.get_name()
+        for current_blockages in blockages_list:
+            if name == current_blockages.get_name():
+                return True
+        return False
+
+    def get_evacuees(self) -> List[Evacuees]:
+        return self.__evacuees
+
+    def get_blockages(self) -> List[Blockages]:
+        blockages_list = []
+        for current_blockages_list in self.__blockages:
+            blockages_list += current_blockages_list
+        return blockages_list
 
     def __build_evacuees(self):
         for vertex_name, vertex in self.__env_config.get_vertexes().items():
@@ -42,7 +103,8 @@ class BayesianNetworkBL:
             possible_is_evacuees_values = [[True, True], [True, False], [False, True], [False, False]]
             for x, y in possible_is_evacuees_values:
                 evacuees_dependencies = [Evacuees(x, first_vertex_name), Evacuees(y, second_vertex_name)]
-                blockages = Blockages(blockages_name, self.__time, evacuees_dependencies, [], True)
+                blockages = Blockages(blockages_name + "," + str(self.__time), self.__time, evacuees_dependencies, [],
+                                      True)
                 probability = BlockagesUtils.noisy_or_probability_calc(blockages, self.__env_config)
                 blockages.set_probability(probability)
                 print(blockages)
@@ -51,8 +113,8 @@ class BayesianNetworkBL:
         else:
             possible_values = [True, False]
             for x in possible_values:
-                prev_blockages = Blockages(blockages_name, self.__time - 1, [], [], x)
-                blockages = Blockages(blockages_name, self.__time, [], [prev_blockages], True)
+                prev_blockages = Blockages(blockages_name + "," + str(self.__time - 1), self.__time - 1, [], [], x)
+                blockages = Blockages(blockages_name + "," + str(self.__time), self.__time, [], [prev_blockages], True)
                 probability = BlockagesUtils.persistence_probability_calc(blockages, self.__env_config)
                 blockages.set_probability(probability)
                 print(blockages)
