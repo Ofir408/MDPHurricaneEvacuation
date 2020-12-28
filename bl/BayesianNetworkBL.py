@@ -28,27 +28,57 @@ class BayesianNetworkBL:
         # TODO: calc by the evidence list - find the bug here... & simplify.
         for evacuee in self.__evacuees:
             if evacuee.get_name() == name:
-                if evacuee.is_true() == is_true:
+                if evacuee.is_true() and is_true:
                     return evacuee.get_probability()
-                else:
-                    return 1 - evacuee.get_probability()
+                if not evacuee.is_true() and not is_true:
+                    return evacuee.get_probability()
+                return 1 - evacuee.get_probability()
         for blockage in self.get_blockages():
-            if self.__is_same_blockages_dependencies(evidence_list, blockage):
-                if blockage.is_true() == is_true:
+            if blockage.get_name() == name and self.__is_same_blockages_dependencies(evidence_list, blockage):
+                if blockage.is_true() and is_true:
                     return blockage.get_probability()
-                else:
-                    return 1 - blockage.get_probability()
+                if not blockage.is_true() and not is_true:
+                    return blockage.get_probability()
+                return 1 - blockage.get_probability()
         return 0.001
 
     def __is_same_blockages_dependencies(self, evidence_list: List[Var], blockage: Blockages):
         blockage_dependencies = blockage.get_blockages_dependencies()
+        evacuees_dependencies = blockage.get_evacuees_dependencies()
         for current_blockage in blockage_dependencies:
             current_name = current_blockage.get_name()
             current_is_true = current_blockage.is_true()
-            temp = Var(current_name).set_value(current_is_true)
-            if temp not in evidence_list:
+            temp = Var(current_name)
+            temp.set_value(current_is_true)
+            if not self.check_if_exist(temp, evidence_list):
+                return False
+
+        for current_evacuee in evacuees_dependencies:
+            current_name = "#V" + current_evacuee.get_name()
+            current_is_true = current_evacuee.is_true()
+            temp = Var(current_name)
+            temp.set_value(current_is_true)
+            if not self.check_if_exist(temp, evidence_list):
                 return False
         return True
+
+    def check_if_exist(self, var: Var, evidence_list: List[Var]):
+        name = var.get_name()
+        is_true = var.is_true()
+        for evidence in evidence_list:
+            current_evidence_name = evidence.get_name()
+            current_evidence_is_true = evidence.is_true()
+            if current_evidence_name == name and current_evidence_is_true == is_true:
+                return True
+        return False
+
+    def get_y_value_from_e(self, var: Var, evidence_list: List[Var]):
+        name = var.get_name()
+        for evidence in evidence_list:
+            current_evidence_name = evidence.get_name()
+            if current_evidence_name == name:
+                return evidence.is_true()
+        return None
 
     def topological_sorter(self) -> List[Var]:
         """

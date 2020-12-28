@@ -17,12 +17,11 @@ class EnumerationAlgo:
         """
         distribution_x = []
         bn_vars = bn.topological_sorter()
-        e_backup = copy.deepcopy(e)
         for possible_x_value in x.get_possible_values():
-            e = copy.deepcopy(e_backup)
             x.set_value(possible_x_value)
-            e.append(copy.deepcopy(x))
-            result = self.__enumerate_all(bn_vars, e, bn)
+            e_tag = copy.deepcopy(e)
+            e_tag.append(copy.deepcopy(x))
+            result = self.__enumerate_all(copy.deepcopy(bn_vars), copy.deepcopy(e_tag), copy.deepcopy(bn))
             distribution_x.append(result)
             print("result= ", result)
         return self.__normalize(distribution_x)
@@ -31,10 +30,13 @@ class EnumerationAlgo:
         if len(variables) == 0:
             return 1.0
         y = variables[0]
-        if y in e:
+        y_value_from_e = bn.get_y_value_from_e(y, e)
+        if y_value_from_e is not None:
             left_vars = copy.deepcopy(variables)
             left_vars.remove(y)
+            y.set_value(y_value_from_e)
             return bn.get_from_bn(y, e) * self.__enumerate_all(left_vars, e, bn)
+
         else:
             total_prob_sum = 0
             left_vars = copy.deepcopy(variables)
@@ -42,14 +44,10 @@ class EnumerationAlgo:
             for y_possible_value in y.get_possible_values():
                 current_y = copy.deepcopy(y)
                 current_y.set_value(y_possible_value)
-                e.append(current_y)
-                print("bn.get_from_bn(current_y, e)= ", bn.get_from_bn(current_y, e))
-                temp = self.__enumerate_all(left_vars, e, bn)
-                print("self.__enumerate_all(left_vars, e, bn)= ", temp)
-                current_prob = bn.get_from_bn(current_y, e) * temp
+                e_tag = copy.deepcopy(e)
+                e_tag.append(current_y)
+                current_prob = bn.get_from_bn(current_y, e_tag) * self.__enumerate_all(left_vars, e_tag, bn)
                 total_prob_sum += current_prob
-                print("current_prob= ", current_prob)
-            print("total_prob_sum= ", total_prob_sum)
             return total_prob_sum
 
     def __normalize(self, distributions: List[float]):
