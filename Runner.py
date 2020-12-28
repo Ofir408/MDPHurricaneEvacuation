@@ -55,7 +55,6 @@ class Runner:
                 print("Possible names: ", set([blockage.get_name() for blockage in bn.get_blockages()]))
                 blockage_name = input("Insert Blockage Name:\n")
                 is_true = input("Is True?\n 1) Yes\n 2) No\n") == "1"
-                # TODO: add dependency? or var ?
                 var = Var(blockage_name)
                 var.set_is_user_evidence(True)
                 var.set_value(is_true)
@@ -64,10 +63,39 @@ class Runner:
 
     def __do_prob_reasoning(self, bn: BayesianNetworkBL):
         possible_names = [v.get_name() for v in bn.topological_sorter()]
-        for name in possible_names:
-            x = Var(name)
-            results = self.__enumeration_algo.enumeration_ask(x, copy.deepcopy(self.__evidence_list), bn)
-            print("P({0}) = {1}\n".format(x.get_name(), round(results[0], 4)))
+        evacuees_names = [name for name in possible_names if "#V" in name]
+        blockages_names = [name for name in possible_names if "#V" not in name]
+        user_input = int(input(
+            "1) What is the probability that each of the vertices contains evacuees?\n"
+            "2) What is the probability that each of the edges is blocked?\n"
+            "3) What is the probability that a certain path (set of edges) is free from blockages?\n"
+        ))
+        if user_input == 1:
+            for name in evacuees_names:
+                x = Var(name)
+                results = self.__enumeration_algo.enumeration_ask(x, copy.deepcopy(self.__evidence_list), bn)
+                print("P({0}) = {1}\n".format(x.get_name(), round(results[0], 4)))
+        if user_input == 2:
+            for name in blockages_names:
+                x = Var(name)
+                results = self.__enumeration_algo.enumeration_ask(x, copy.deepcopy(self.__evidence_list), bn)
+                print("P({0}) = {1}\n".format(x.get_name(), round(results[0], 4)))
+        if user_input == 3:
+            path_str = input("Enter Path Separated with '-' from: {0}\n".format(blockages_names))
+            names = path_str.split("-")
+            probability = 1.0
+            left_vars = [Var(name) for name in names]
+            for var in left_vars:
+                var.set_value(False)
+            left_vars += self.__evidence_list
+
+            for name in names:
+                current_var = Var(name)
+                current_var.set_value(False)
+                left_vars.remove(current_var)
+                current_prob = self.__enumeration_algo.enumeration_ask(current_var, copy.deepcopy(left_vars), bn)
+                probability *= current_prob[1]
+            print("P({0}) = {1}\n".format("Path= " + path_str, round(probability, 4)))
 
     def __handle_choice(self, user_choice: int, bn: BayesianNetworkBL):
         if user_choice == 1:

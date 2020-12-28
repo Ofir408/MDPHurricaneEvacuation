@@ -25,7 +25,7 @@ class BayesianNetworkBL:
     def get_from_bn(self, var: Var, evidence_list: List[Var]) -> float:
         name = var.get_name()
         is_true = var.is_true()
-        # TODO: calc by the evidence list - find the bug here... & simplify.
+
         for evidence in evidence_list:
             if evidence.get_is_user_evidence() and evidence.get_name() == name:
                 if evidence.is_true() == is_true:
