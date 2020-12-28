@@ -3,8 +3,6 @@ import copy
 from bl.BayesianNetworkBL import BayesianNetworkBL
 from bl.EnumerationAlgo import EnumerationAlgo
 from configuration_reader.EnvironmentConfiguration import EnvironmentConfiguration
-from data_structures.Blockages import Blockages
-from data_structures.Evacuees import Evacuees
 from data_structures.Var import Var
 from utils.EnvironmentUtils import EnvironmentUtils
 
@@ -47,27 +45,29 @@ class Runner:
             if user_choice == '1':
                 print("Possible names: ", [evacuee.get_name() for evacuee in bn.get_evacuees()])
                 evacuee_name = input("Insert Evacuee Name:\n")
-                is_true = input("Is True?\n 1) Yes\n 2) No\n")
-                evacuees = Evacuees(is_true == 1, evacuee_name, 1)
-                self.__evidence_list.append(evacuees)
+                is_true = input("Is True?\n 1) Yes\n 2) No\n") == "1"
+                var = Var(evacuee_name)
+                var.set_value(is_true)
+                var.set_is_user_evidence(True)
+                self.__evidence_list.append(var)
                 is_valid_choice = True
             else:
-                print("Possible names: ", [blockage.get_name() for blockage in bn.get_blockages()])
+                print("Possible names: ", set([blockage.get_name() for blockage in bn.get_blockages()]))
                 blockage_name = input("Insert Blockage Name:\n")
-                time = input("Insert Time: \n")
-                is_true = input("Is True?\n 1) Yes\n 2) No\n")
-                blockages = Blockages(blockage_name, 0 if time == "0" else 1, [], [], is_true == 1)
-                self.__evidence_list.append(blockages)
+                is_true = input("Is True?\n 1) Yes\n 2) No\n") == "1"
+                # TODO: add dependency? or var ?
+                var = Var(blockage_name)
+                var.set_is_user_evidence(True)
+                var.set_value(is_true)
+                self.__evidence_list.append(var)
                 is_valid_choice = True
 
     def __do_prob_reasoning(self, bn: BayesianNetworkBL):
         possible_names = [v.get_name() for v in bn.topological_sorter()]
-        print("Possible names: ", possible_names)
-        variable = input("Choose variable name:\n")
-        x = Var(variable)
-        results = self.__enumeration_algo.enumeration_ask(x, copy.deepcopy(self.__evidence_list), bn)
-        # TODO: add a better prints
-        print("Results: ", results)
+        for name in possible_names:
+            x = Var(name)
+            results = self.__enumeration_algo.enumeration_ask(x, copy.deepcopy(self.__evidence_list), bn)
+            print("P({0}) = {1}\n".format(x.get_name(), round(results[0], 4)))
 
     def __handle_choice(self, user_choice: int, bn: BayesianNetworkBL):
         if user_choice == 1:

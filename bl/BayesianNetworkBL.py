@@ -26,6 +26,13 @@ class BayesianNetworkBL:
         name = var.get_name()
         is_true = var.is_true()
         # TODO: calc by the evidence list - find the bug here... & simplify.
+        for evidence in evidence_list:
+            if evidence.get_is_user_evidence() and evidence.get_name() == name:
+                if evidence.is_true() == is_true:
+                    return 1.0
+                else:
+                    return 0.0
+
         for evacuee in self.__evacuees:
             if evacuee.get_name() == name:
                 if evacuee.is_true() and is_true:
@@ -76,7 +83,7 @@ class BayesianNetworkBL:
         name = var.get_name()
         for evidence in evidence_list:
             current_evidence_name = evidence.get_name()
-            if current_evidence_name == name:
+            if not evidence.get_is_user_evidence() and current_evidence_name == name:
                 return evidence.is_true()
         return None
 

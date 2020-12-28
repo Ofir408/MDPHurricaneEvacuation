@@ -23,7 +23,6 @@ class EnumerationAlgo:
             e_tag.append(copy.deepcopy(x))
             result = self.__enumerate_all(copy.deepcopy(bn_vars), copy.deepcopy(e_tag), copy.deepcopy(bn))
             distribution_x.append(result)
-            print("result= ", result)
         return self.__normalize(distribution_x)
 
     def __enumerate_all(self, variables: List[Var], e: List[Var], bn: BayesianNetworkBL) -> float:
