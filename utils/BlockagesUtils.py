@@ -68,24 +68,12 @@ class BlockagesUtils:
         for current_blockages in previous_blockage_prob:
             if required_blockage.__eq__(current_blockages):
                 return current_blockages.get_probability()
-        print("Not found!!!")
         return None
 
     @staticmethod
     def __is_spontaneous_blockage(blockages: List[Blockages]):
         blockage = blockages[-1]
         return not blockage.is_true()
-
-    @staticmethod
-    def __is_incident(evacuees: List[Evacuees]):
-        return len([True for x in evacuees if x.is_true()]) == 1
-
-    @staticmethod
-    def __is_leakage(evacuees: List[Evacuees]):
-        for evacuee in evacuees:
-            if evacuee.is_true():
-                return False
-        return True
 
     @staticmethod
     def __pi(edge_weight: float) -> float:
