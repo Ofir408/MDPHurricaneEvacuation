@@ -18,12 +18,9 @@ class ConfigurationReader:
         vertexes_dict = {}
         edges_dict = {}
         vertices_num = -1
-        persistence = -1  # default values.
         for current_line in lines:
             if current_line.startswith("#N"):
                 vertices_num = int(current_line.split(ConfigurationReader.SPACE_SEPARATOR)[1])
-            elif current_line.startswith("#Ppersistence"):
-                persistence = float(current_line.split(ConfigurationReader.SPACE_SEPARATOR)[1])
             elif current_line.startswith("#V"):
                 name, vertex = ConfigurationReader.create_vertex(current_line)
                 vertexes_dict[name] = vertex
@@ -36,20 +33,20 @@ class ConfigurationReader:
                 second_vertex = "#V" + second_vertex
                 vertexes_dict[first_vertex].add_edge_name(edge.get_edge_name())
                 vertexes_dict[second_vertex].add_edge_name(edge.get_edge_name())
-        return EnvironmentConfiguration(vertices_num, persistence, vertexes_dict, edges_dict)
+        return EnvironmentConfiguration(vertices_num, vertexes_dict, edges_dict)
 
     @staticmethod
     # Example input: #E1 1 2 W1
     def create_edge(input_line: str) -> Optional[Tuple[str, Edge]]:
         parts = input_line.split(ConfigurationReader.SPACE_SEPARATOR)
-        if len(parts) != 4:
-            print(f'input line: {input_line} is invalid. Correct format: #E1 1 2 W1')
-            return None
         name = parts[0].replace("#E", "")
         first_vertex = parts[1]
         second_vertex = parts[2]
         weight = int(parts[3].replace("W", ""))
-        return name, Edge(name, weight, (first_vertex, second_vertex))
+        blockages_prob = 0
+        if len(parts) == 5:
+            blockages_prob = float(parts[4].replace("B", ""))
+        return name, Edge(name, weight, (first_vertex, second_vertex), blockages_prob)
 
     @staticmethod
     # Example input: #V4 P2 or #V4

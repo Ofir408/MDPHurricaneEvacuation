@@ -10,20 +10,17 @@ class EnvironmentUtils:
     _VERTEX_PREFIX = "#V"
     _WEIGHT_PREFIX = "W"
     _SPACE_SEPARATOR = " "
-    _PERSISTENCE_PREFIX = "#Ppersistence"
     _NUMBER_OF_VERTICES_PREFIX = "#N"
     _PERSONS_NUM_PREFIX = "F"
 
     @staticmethod
     def print_environment(env_config: EnvironmentConfiguration):
         num_of_vertex = env_config.get_vertices_num()
-        persistence = env_config.get_persistence()
         edges_dict = env_config.get_edges()
         vertexes_dict = env_config.get_vertexes()
 
         print(EnvironmentUtils._NUMBER_OF_VERTICES_PREFIX + EnvironmentUtils._SPACE_SEPARATOR + str(
             num_of_vertex))
-        print(EnvironmentUtils._PERSISTENCE_PREFIX + EnvironmentUtils._SPACE_SEPARATOR + str(persistence))
 
         for vertex in vertexes_dict.values():
             EnvironmentUtils.__print_vertex(vertex)
@@ -71,9 +68,5 @@ class EnvironmentUtils:
 
     @staticmethod
     def __print_edge(edge: Edge):
-        first_vertex_name, second_vertex_name = edge.get_vertex_names()
-        print(
-            EnvironmentUtils._EDGE_PREFIX + edge.get_edge_name() + EnvironmentUtils._SPACE_SEPARATOR + first_vertex_name
-            + EnvironmentUtils._SPACE_SEPARATOR +
-            second_vertex_name + EnvironmentUtils._SPACE_SEPARATOR + EnvironmentUtils._WEIGHT_PREFIX + str(
-                edge.get_weight()))
+        print(edge)
+

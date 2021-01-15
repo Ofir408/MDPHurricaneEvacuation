@@ -6,18 +6,14 @@ from data_structures.Vertex import Vertex
 
 class EnvironmentConfiguration:
 
-    def __init__(self, vertices_num: int, persistence: float, vertex: Dict[str, Vertex], edges: Dict[str, Edge]):
+    def __init__(self, vertices_num: int, vertex: Dict[str, Vertex], edges: Dict[str, Edge]):
         self.__vertices_num = vertices_num
-        self.__persistence = persistence
         self.__vertexes = vertex
         self.__edges = edges
         self.__blocked_edges = []
 
     def get_vertices_num(self):
         return self.__vertices_num
-
-    def get_persistence(self):
-        return self.__persistence
 
     def get_vertexes(self):
         return self.__vertexes

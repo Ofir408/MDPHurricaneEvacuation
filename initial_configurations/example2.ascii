@@ -1,14 +1,13 @@
-#N 4                 ; number of vertices n in graph (from 1 to n)
+#N 5                 ; number of vertices n in graph (from 1 to n)
 
-#V1 F0.0             ; Vertex 1, no evacuees for sure
-#V2 F0.4             ; Vertex 2, probability of evacuees 0.4
-#V3 F0.0             ; Vertex 2, probability of evacuees 0.0
-#V4 F0.0             ; Vertex 2, probability of evacuees 0.0
+#V1
+#V2
+#V3
+#V4
+#V5
 
-#E1 1 2 W1           ; Edge1 between vertices 1 and 2, weight 1
-#E2 2 3 W3           ; Edge2 between vertices 2 and 3, weight 3
-#E3 3 4 W3           ; Edge3 between vertices 3 and 4, weight 3
-#E4 2 4 W4           ; Edge4 between vertices 2 and 4, weight 4
-
-
-#Ppersistence 0.9    ; Set persistence probability to 0.9
+#E1 1 2 W3       ; Edge from vertex 1 to vertex 2, weight 3
+#E2 2 3 W2       ; Edge from vertex 2 to vertex 3, weight 2
+#E3 3 4 W3 B0.3  ; Edge from vertex 3 to vertex 4, weight 3, probability of blockage 0.3
+#E4 4 5 W1       ; Edge from vertex 4 to vertex 5, weight 1
+#E5 2 4 W4       ; Edge from vertex 2 to vertex 4, weight 4
