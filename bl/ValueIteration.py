@@ -7,7 +7,7 @@ from data_structures.TransitionProbability import TransitionProbability
 
 
 class ValueIteration:
-    __CONVERGE_DISTANCE = 0.00001
+    __CONVERGE_DISTANCE = 0.00000001
     __GAMA = 1
 
     def __init__(self, transition_distributions: List[TransitionProbability], states_dict: Dict[BeliefState, float]):
@@ -18,7 +18,7 @@ class ValueIteration:
         should_continue = True
         state_to_best_action_dict = {}
         while should_continue:
-            prev_utilities = self.__states_dict.values()
+            prev_utilities = [v for v in self.__states_dict.values()]
             for state in self.__states_dict.keys():
                 max_sum = -100000000000
                 max_action = None
@@ -29,11 +29,11 @@ class ValueIteration:
                         max_action = action
 
                 r = self.__get_edge_distance(max_action, env_config)
-                current_utility = r * ValueIteration.__GAMA * max_sum
+                current_utility = r + ValueIteration.__GAMA * max_sum
                 state_to_best_action_dict[state] = max_action
                 self.__update_utility(state, current_utility)
             should_continue = not self.__is_converge(list(self.__states_dict.values()), list(prev_utilities))
-        return state_to_best_action_dict
+        return state_to_best_action_dict, self.__states_dict
 
     def __is_converge(self, current_utilities: List[float], prev_utilities: List[float]) -> bool:
         if current_utilities is None or prev_utilities is None:
@@ -56,12 +56,11 @@ class ValueIteration:
         current_vertex_name = current_state.get_vertex_name()
         vertices_dict = env_config.get_vertexes()
         current_vertex = vertices_dict[current_vertex_name]
-        without_duplicates = list(set(current_vertex.get_edges()))
-        return without_duplicates
+        return current_vertex.get_edges()
 
     def __get_edge_distance(self, action_name: str, env_config: EnvironmentConfiguration) -> float:
         edges_dict = env_config.get_edges()
-        return edges_dict[action_name].get_weight()
+        return -edges_dict[action_name].get_weight()
 
     def __get_state_utility(self, state: BeliefState) -> float:
         return self.__states_dict[state]
