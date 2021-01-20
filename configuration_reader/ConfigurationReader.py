@@ -1,3 +1,4 @@
+import copy
 from typing import Optional, Tuple
 
 from configuration_reader.EnvironmentConfiguration import EnvironmentConfiguration
@@ -26,13 +27,15 @@ class ConfigurationReader:
                 vertexes_dict[name] = vertex
             elif current_line.startswith("#E"):
                 name, edge = ConfigurationReader.create_edge(current_line)
-                edges_dict[name] = edge
+                edges_dict[name] = copy.deepcopy(edge)
                 # add the edge name to relevant vertexes
-                first_vertex, second_vertex = edge.get_vertex_names()
-                first_vertex = "#V" + first_vertex
-                second_vertex = "#V" + second_vertex
-                vertexes_dict[first_vertex].add_edge_name(edge.get_edge_name())
-                vertexes_dict[second_vertex].add_edge_name(edge.get_edge_name())
+                first_vertex_name, second_vertex_name = edge.get_vertex_names()
+                first_vertex_name = "#V" + first_vertex_name
+                second_vertex_name = "#V" + second_vertex_name
+                first_vertex = vertexes_dict[first_vertex_name]
+                first_vertex.add_edge_name(edge.get_edge_name())
+                second_vertex = vertexes_dict[second_vertex_name]
+                second_vertex.add_edge_name(edge.get_edge_name())
         return EnvironmentConfiguration(vertices_num, vertexes_dict, edges_dict)
 
     @staticmethod
@@ -52,12 +55,5 @@ class ConfigurationReader:
     # Example input: #V4 P2 or #V4
     def create_vertex(input_line: str) -> Optional[Tuple[str, Vertex]]:
         parts = input_line.split(ConfigurationReader.SPACE_SEPARATOR)
-        parts_length = len(parts)
-        evacuees_probability = 0
-        if parts_length > 2 or parts_length == 0:
-            print(f'input line: {input_line} is invalid. Correct format: #V4 P2 or #V4')
-            return None
-        if parts_length == 2:
-            evacuees_probability = float(parts[1].replace("F", ""))
         name = parts[0]
-        return name, Vertex(name, evacuees_probability)
+        return name, Vertex(name)

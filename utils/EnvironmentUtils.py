@@ -62,11 +62,8 @@ class EnvironmentUtils:
 
     @staticmethod
     def __print_vertex(vertex: Vertex):
-        print(
-            vertex.get_vertex_name() + EnvironmentUtils._SPACE_SEPARATOR
-            + EnvironmentUtils._PERSONS_NUM_PREFIX + str(vertex.get_evacuees_probability()))
+        print(vertex.get_vertex_name())
 
     @staticmethod
     def __print_edge(edge: Edge):
         print(edge)
-

@@ -1,6 +1,8 @@
+from bl.ValueIteration import ValueIteration
 from configuration_reader.EnvironmentConfiguration import EnvironmentConfiguration
 from utils.BeliefStatesGenerator import BeliefStatesGenerator
 from utils.EnvironmentUtils import EnvironmentUtils
+from utils.TransitionDistributionGenerator import TransitionDistributionGenerator
 
 
 class Runner:
@@ -10,6 +12,16 @@ class Runner:
         states = BeliefStatesGenerator.generate_states(config)
         for state in states:
             print(state)
-        #print("Possible Vertices: ", [k for k in config.get_vertexes().keys()])
-        #start_vertex = input("Enter Start vertex:\n")
+        transition_distributions = TransitionDistributionGenerator.generate_distributions(states, config.get_edges().values())
+        for transition_distribution in transition_distributions:
+            print(transition_distribution)
+
+        print("Possible Vertices: ", [k for k in config.get_vertexes().keys()])
+        start_vertex = input("Enter Start vertex:\n")
+        states_dict = {}
+        for state in states:
+            states_dict[state] = 0.0
+        value_iteration_algo = ValueIteration(transition_distributions, states_dict)
+        result = value_iteration_algo.value_iteration_algo(config)
+        print("DONE")
         #end_vertex = input("Enter End vertex:\n")

@@ -25,6 +25,7 @@ class BeliefStatesGenerator:
     def __set_unknown_edges(edges: List[Edge]):
         for edge in edges:
             edge.set_blockages_probability(-1)
+            edge.set_is_blocked_prob(True)
         return edges
 
     @staticmethod
@@ -41,7 +42,9 @@ class BeliefStatesGenerator:
                                                                                          possible_blocked_edges)
             if has_edge:
                 for possible_value in [0, 1]:
-                    temp_edges_dict[edge_name].set_blockages_probability(possible_value)
+                    edge = temp_edges_dict[edge_name]
+                    edge.set_blockages_probability(possible_value)
+                    edge.set_is_blocked_prob(True if possible_value else False)
                     states.append(BeliefState(vertex_name, list(temp_edges_dict.values())))
             else:
                 states.append(

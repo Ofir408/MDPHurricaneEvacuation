@@ -8,6 +8,7 @@ class Edge:
         self.__weight = weight
         self.__vertex_names = vertex_names
         self.__blockages_probability = blockages_probability
+        self.__is_blocked_prob = False
 
     def get_edge_name(self):
         return self.__edge_name
@@ -21,10 +22,22 @@ class Edge:
     def get_blockages_probability(self):
         return self.__blockages_probability
 
+    def get_is_blocked_prob_calc(self):
+        return self.__is_blocked_prob
+
     def set_blockages_probability(self, prob: float):
         self.__blockages_probability = prob
 
+    def set_is_blocked_prob(self, is_blocked_prob_calc: bool):
+        self.__is_blocked_prob = is_blocked_prob_calc
+
     def __str__(self) -> str:
-        return "Edge: {0}, Weight: {1}, Vertexes: {2}, blockage prob: {3}".format(self.__edge_name, self.__weight,
-                                                                                  self.__vertex_names,
-                                                                                  self.__blockages_probability)
+        return "Edge: {0}, Vertexes: {1}".format(self.__edge_name, self.__vertex_names)
+
+    def full_str(self) -> str:
+        return "Edge: {0}, Vertexes: {1}, blockages_probability: {2}".format(self.__edge_name, self.__vertex_names, self.__blockages_probability)
+
+    def __eq__(self, other: 'Edge'):
+        return self.__edge_name == other.__edge_name and self.__weight == other.__weight \
+               and self.__vertex_names == other.__vertex_names \
+               and self.__blockages_probability == other.__blockages_probability and self.get_is_blocked_prob_calc() == other.get_is_blocked_prob_calc()
