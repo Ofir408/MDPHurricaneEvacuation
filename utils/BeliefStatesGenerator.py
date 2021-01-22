@@ -29,6 +29,14 @@ class BeliefStatesGenerator:
         return edges
 
     @staticmethod
+    def __set_known_edges(edges: List[Edge], value: float):
+        temp_copy = copy.deepcopy(edges)
+        for edge in temp_copy:
+            edge.set_blockages_probability(value)
+            edge.set_is_blocked_prob(True if value == 1 else False)
+        return temp_copy
+
+    @staticmethod
     def generate_states(env_config: EnvironmentConfiguration) -> List[BeliefState]:
         states = []
         possible_blocked_edges = [edge for edge in env_config.get_edges().values() if
@@ -49,4 +57,9 @@ class BeliefStatesGenerator:
             else:
                 states.append(
                     BeliefState(vertex_name, BeliefStatesGenerator.__set_unknown_edges(list(temp_edges_dict.values()))))
+                states.append(BeliefState(vertex_name,
+                                          BeliefStatesGenerator.__set_known_edges(list(temp_edges_dict.values()), 0)))
+                states.append(BeliefState(vertex_name,
+                                          BeliefStatesGenerator.__set_known_edges(list(temp_edges_dict.values()), 1)))
+
         return states

@@ -19,8 +19,12 @@ class Runner:
 
         print("Possible Vertices: ", [k for k in config.get_vertexes().keys()])
         #start_vertex = input("Enter Start vertex:\n")
+        end_vertex = input("Enter End vertex:\n")
+
         states_dict = {}
         for state in states:
+            if state.get_vertex_name() == end_vertex:
+                state.set_is_goal(True)
             states_dict[state] = 0.0
         value_iteration_algo = ValueIteration(transition_distributions, states_dict)
         result, states_dict = value_iteration_algo.value_iteration_algo(config)
@@ -31,4 +35,3 @@ class Runner:
             print("State={0}, Utility={1}".format(k, v))
 
         print("DONE")
-        # end_vertex = input("Enter End vertex:\n")

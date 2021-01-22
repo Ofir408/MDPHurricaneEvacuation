@@ -31,6 +31,7 @@ class TransitionDistributionGenerator:
                 prob = TransitionDistributionGenerator.__calc_prob(transition_prob, possible_edges)
                 if prob != 0:
                     transition_prob.set_prob(prob)
+                    print("valid: ", transition_prob)
                     transition_probability_list.append(copy.deepcopy(transition_prob))
         return transition_probability_list
 
@@ -76,11 +77,8 @@ class TransitionDistributionGenerator:
             return 0  # not a possible state given action & current state
         else:
             prob = 1.0
-            blockage_prob = 1.0
             edges_diff = TransitionDistributionGenerator.__find_edges_diff(given_state, required_state)
             for edge in edges_diff:
-                for possible_edge in possible_edges:
-                    if possible_edge.get_edge_name() == edge.get_edge_name():
-                        blockage_prob = possible_edge.get_blockages_probability()
-                prob *= blockage_prob if edge.get_is_blocked_prob_calc() else 1 - blockage_prob
+                prob *= edge.get_blockages_probability()
+            print("prob= ", prob)
             return prob

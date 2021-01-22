@@ -5,15 +5,22 @@ from data_structures.Edge import Edge
 
 
 class BeliefState:
-    def __init__(self, vertex_name: str, blockages_edges: List[Edge]):
+    def __init__(self, vertex_name: str, blockages_edges: List[Edge], is_goal: bool = False):
         self.__vertex_name = vertex_name
         self.__blockages_edges = copy.deepcopy(blockages_edges)
+        self.__is_goal = is_goal
 
     def get_vertex_name(self):
         return self.__vertex_name
 
     def get_blockages_edges(self):
         return self.__blockages_edges
+
+    def get_is_goal(self):
+        return self.__is_goal
+
+    def set_is_goal(self, is_goal: bool):
+        self.__is_goal = is_goal
 
     def __str__(self):
         edges_str = ""

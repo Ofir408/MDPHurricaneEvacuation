@@ -28,7 +28,7 @@ class ValueIteration:
                         max_sum = current_sum
                         max_action = action
 
-                r = self.__get_edge_distance(max_action, env_config)
+                r = self.__get_edge_distance(max_action, env_config) if not state.get_is_goal() else 0
                 current_utility = r + ValueIteration.__GAMA * max_sum
                 state_to_best_action_dict[state] = max_action
                 self.__update_utility(state, current_utility)
@@ -56,7 +56,14 @@ class ValueIteration:
         current_vertex_name = current_state.get_vertex_name()
         vertices_dict = env_config.get_vertexes()
         current_vertex = vertices_dict[current_vertex_name]
-        return current_vertex.get_edges()
+        blocked_edges = []
+        for edge in current_state.get_blockages_edges():
+            if edge.get_blockages_probability() == 1:
+                # Blocked edge
+                blocked_edges.append(edge)
+        blocked_edges_str = [edge.get_edge_name() for edge in blocked_edges]
+        diff = [edge_name for edge_name in current_vertex.get_edges() if edge_name not in blocked_edges_str]
+        return diff
 
     def __get_edge_distance(self, action_name: str, env_config: EnvironmentConfiguration) -> float:
         edges_dict = env_config.get_edges()
@@ -73,7 +80,8 @@ class ValueIteration:
             is_same_current_state = current_transition_distribution.get_given_belief_state() == given_state
             is_same_next_state = current_transition_distribution.get_required_belief_state() == next_state
             is_same_action = current_transition_distribution.get_action().get_edge_name() == action_name
-            if is_same_current_state and is_same_next_state and is_same_action:
+            is_given_goal = given_state.get_is_goal()
+            if is_same_current_state and is_same_next_state and is_same_action and not is_given_goal:
                 return current_transition_distribution.get_prob()
 
         # Doesn't exists, the prob is 0
@@ -86,5 +94,5 @@ class ValueIteration:
             next_state_utility = self.__get_state_utility(next_state)
             transition_utility = self.__get_transition_prob(state, next_state, edge_name)
             current_prob = next_state_utility * transition_utility
-            total_prob_sum += current_prob
+            total_prob_sum += current_prob / len(possible_next_states)
         return total_prob_sum
